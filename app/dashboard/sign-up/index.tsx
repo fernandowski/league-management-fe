@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         marginTop: 8,
     },
     card: {
-        maxWidth: 500,
+        maxWidth: 700,
         width: '90%'
     }
 });
