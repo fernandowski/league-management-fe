@@ -4,6 +4,7 @@ import ControlledTextInput from "@/components/FormControls/ControlledTextInput";
 import {Button, Card} from 'react-native-paper'
 import Joi from "joi";
 import {joiResolver} from "@hookform/resolvers/joi";
+import {useFormSubmit} from "@/hooks/useFormSubmit";
 
 interface SignUpData {
     email: string;
@@ -12,7 +13,7 @@ interface SignUpData {
 
 const schema = Joi.object({
     email: Joi.string()
-        .email({ tlds: { allow: false } })
+        .email({tlds: {allow: false}})
         .required()
         .messages({
             "string.empty": "Email is required",
@@ -33,8 +34,9 @@ export default function SignUp() {
             resolver: joiResolver(schema),
         }
     );
-    const onSubmit: SubmitHandler<SignUpData> = (data) => {
-        console.log(data)
+    const {submitForm, error, loading} = useFormSubmit();
+    const onSubmit: SubmitHandler<SignUpData> = async (data) => {
+        await submitForm('/v1/user/register', data);
     }
 
     return (
@@ -43,9 +45,10 @@ export default function SignUp() {
                 <Card.Title title={'Sign-Up'}/>
                 <Card.Content>
                     <ControlledTextInput<SignUpData> style={styles.formElement} control={control} label='Email'
-                                                     name={'email'}  error={errors.email?.message}/>
+                                                     name={'email'} error={errors.email?.message}/>
                     <ControlledTextInput<SignUpData> style={styles.formElement} control={control} label='Password'
-                                                     name={'password'} secureTextEntry  error={errors.password?.message}/>
+                                                     name={'password'} secureTextEntry
+                                                     error={errors.password?.message}/>
                 </Card.Content>
                 <Card.Actions>
                     <Button style={[styles.submitButton]} onPress={handleSubmit(onSubmit)}>Sign-up</Button>
