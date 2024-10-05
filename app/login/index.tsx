@@ -5,6 +5,7 @@ import {Button, Card, Text} from 'react-native-paper'
 import Joi from "joi";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useFormSubmit} from "@/hooks/useFormSubmit";
+import {storeJWT} from "@/util/jwt-manager";
 
 interface LoginData {
     email: string;
@@ -36,7 +37,7 @@ export default function Login() {
     const {submitForm, error, loading} = useFormSubmit();
     const onSubmit: SubmitHandler<LoginData> = async (data) => {
         const response = await submitForm('/v1/user/login', data);
-        console.log(response)
+        await storeJWT(response.jwt)
     }
 
     return (
