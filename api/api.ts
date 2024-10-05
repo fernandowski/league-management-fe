@@ -31,12 +31,11 @@ export async function apiRequest(
 
         if (!response.ok) {
             const errorResponse = await response.json();
-            throw new Error(errorResponse.message || 'Request failed');
+            throw new Error(errorResponse.message || errorResponse.error || 'Request failed');
         }
 
         return await response.json();
     } catch (error) {
-        console.error('API request error:', error);
         throw error;
     }
 }

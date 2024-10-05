@@ -1,12 +1,12 @@
-import {SafeAreaView, View, StyleSheet, Dimensions} from "react-native";
-import {useForm, Controller, SubmitHandler} from 'react-hook-form';
+import {SafeAreaView, StyleSheet, Dimensions} from "react-native";
+import {useForm, SubmitHandler} from 'react-hook-form';
 import ControlledTextInput from "@/components/FormControls/ControlledTextInput";
-import {Button, Card} from 'react-native-paper'
+import {Button, Card, Text} from 'react-native-paper'
 import Joi from "joi";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {useFormSubmit} from "@/hooks/useFormSubmit";
 
-interface SignUpData {
+interface LoginData {
     email: string;
     password: string;
 }
@@ -24,29 +24,30 @@ const schema = Joi.object({
         .required()
         .messages({
             "string.empty": "Password is required",
-            "string.min": "Password must be at least 6 characters",
         }),
 });
 
-export default function SignUp() {
-    const {control, handleSubmit, formState: {errors}} = useForm<SignUpData>(
+export default function Login() {
+    const {control, handleSubmit, formState: {errors}} = useForm<LoginData>(
         {
             resolver: joiResolver(schema),
         }
     );
     const {submitForm, error, loading} = useFormSubmit();
-    const onSubmit: SubmitHandler<SignUpData> = async (data) => {
-        await submitForm('/v1/user/register', data);
+    const onSubmit: SubmitHandler<LoginData> = async (data) => {
+        const response = await submitForm('/v1/user/login', data);
+        console.log(response)
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <Card style={styles.card}>
-                <Card.Title title={'Sign-Up'}/>
+                <Card.Title title={'Login'}/>
                 <Card.Content>
-                    <ControlledTextInput<SignUpData> style={styles.formElement} control={control} label='Email'
+                    {error && <Text style={{ color: 'red' }}>{error}</Text>}
+                    <ControlledTextInput<LoginData> style={styles.formElement} control={control} label='Email'
                                                      name={'email'} error={errors.email?.message}/>
-                    <ControlledTextInput<SignUpData> style={styles.formElement} control={control} label='Password'
+                    <ControlledTextInput<LoginData> style={styles.formElement} control={control} label='Password'
                                                      name={'password'} secureTextEntry
                                                      error={errors.password?.message}/>
                 </Card.Content>
