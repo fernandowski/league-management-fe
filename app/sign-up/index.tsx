@@ -44,6 +44,7 @@ export default function SignUp() {
             <Card style={styles.card}>
                 <Card.Title title={'Sign-Up'}/>
                 <Card.Content>
+                    {error && <Text style={{ color: 'red' }}>{error}</Text>}
                     <ControlledTextInput<SignUpData> style={styles.formElement} control={control} label='Email'
                                                      name={'email'} error={errors.email?.message}/>
                     <ControlledTextInput<SignUpData> style={styles.formElement} control={control} label='Password'
@@ -51,7 +52,7 @@ export default function SignUp() {
                                                      error={errors.password?.message}/>
                 </Card.Content>
                 <Card.Actions>
-                    <Button style={[styles.submitButton]} onPress={handleSubmit(onSubmit)}>Sign-up</Button>
+                    <Button style={[styles.submitButton]} onPress={handleSubmit(onSubmit)}>Sign-in</Button>
                 </Card.Actions>
             </Card>
         </SafeAreaView>
