@@ -1,8 +1,6 @@
-import {Button, Text, View} from "react-native";
+import Overview from "@/components/Overview/Overview";
 export default function Index() {
     return (
-        <View>
-            <Text>welcome?</Text>
-        </View>
+        <Overview/>
     );
 }

@@ -17,16 +17,17 @@ export const useOrganizationStore = create<OrganizationStore>((set) => ({
         set({loading: true});
         try {
             const jwt = await fetchJWT();
-            const response = await apiRequest('v1/organizations', {
+            const response = await apiRequest('/v1/organizations', {
                 method: 'GET',
                 headers: {
                     auth: jwt as string
                 }
             });
-            const data = await response.json();
-            set({organizations: data, loading: false});
+
+            set({organizations: response, loading: false});
 
         } catch (error: any) {
+            console.log(error)
             set({error: error.message, loading: false});
         }
     },

@@ -11,16 +11,14 @@ export default function Layout() {
             <Drawer screenOptions={{
                 drawerType: dimensions.width >= 768 ? 'permanent' : 'slide',
                 header: ({navigation, route, options}) => {
-
                     return <Header navigation={navigation} route={route} options={options}/>
                 },
             }}
-
             >
                 <Drawer.Screen
                     name="index"
                     options={{
-                        drawerLabel: 'Home',
+                        drawerLabel: 'Overview',
                         title: 'overview',
                     }}
                 />

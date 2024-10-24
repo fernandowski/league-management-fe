@@ -18,10 +18,10 @@ export function Header(_props: HeaderProps) {
     }
 
     useEffect(() => {
+        console.log('fetching')
         fetchOrganizations();
     }, [])
 
-    console.log(organizations, loading, );
     return (
         <View style={[styles.view]}>
             <View style={[styles.select]}>

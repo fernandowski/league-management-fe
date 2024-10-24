@@ -1,3 +1,5 @@
+import {fetchJWT} from "@/util/jwt-manager";
+
 export interface RequestOptions {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
     headers?: { [key: string]: string };
@@ -13,9 +15,11 @@ export async function apiRequest(
     { method, headers, body} : RequestOptions
 ){
     const url = `${API_URL}${endpoint}`;
+    const jwt = await fetchJWT();
 
     const defaultHeaders = {
         'Content-Type': 'application/json',
+        auth: jwt as string,
         ...(headers || {}),
     };
 
@@ -34,7 +38,7 @@ export async function apiRequest(
             throw new Error(errorResponse.message || errorResponse.error || 'Request failed');
         }
 
-        return await response.json();
+        return response.json();
     } catch (error) {
         throw error;
     }

@@ -55,7 +55,7 @@ export default function Login() {
                                                      error={errors.password?.message}/>
                 </Card.Content>
                 <Card.Actions>
-                    <Button style={[styles.submitButton]} onPress={handleSubmit(onSubmit)}>Sign-up</Button>
+                    <Button style={[styles.submitButton]} onPress={handleSubmit(onSubmit)}>Login</Button>
                 </Card.Actions>
             </Card>
         </SafeAreaView>
