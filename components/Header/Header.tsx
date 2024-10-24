@@ -2,7 +2,8 @@ import {Dimensions, StyleSheet, Text, useWindowDimensions, View} from "react-nat
 import {DrawerNavigationOptions, DrawerNavigationProp} from "@react-navigation/drawer";
 import {ParamListBase, RouteProp} from "@react-navigation/native";
 import {Select} from "@/components/Select/Select";
-import {Button} from "react-native-paper";
+import {useOrganizationStore} from "@/stores/organizationStore";
+import {useEffect} from "react";
 
 
 interface HeaderProps {
@@ -12,22 +13,20 @@ interface HeaderProps {
 }
 
 export function Header(_props: HeaderProps) {
-
+    const {organizations, loading, error, fetchOrganizations} = useOrganizationStore();
     const onSelectChange = (value: string) => {
-        // TODO CREATE GENERIC STORE.
     }
 
-    const data = [
-        {value: 'hello', label: "Hello  Option 1 "},
-        {value: 'hello 2', label: "Hello  Option 2 "},
-        {value: 'hello 3', label: "Hello  Option 3"},
-    ]
+    useEffect(() => {
+        fetchOrganizations();
+    }, [])
 
+    console.log(organizations, loading, );
     return (
         <View style={[styles.view]}>
             <View style={[styles.select]}>
                 <Text>Organizations: </Text>
-                <Select onChange={onSelectChange} data={data}/>
+                <Select onChange={onSelectChange} data={organizations}/>
             </View>
         </View>
     )
