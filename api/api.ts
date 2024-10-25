@@ -22,7 +22,6 @@ export async function apiRequest(
 
     console.log(secure)
     if (secure && JwtIsExpired(jwt)) {
-        console.log('expired', jwt)
         await removeJWT();
         router.push("/login")
         throw new Error("jwt is expried")
@@ -35,7 +34,6 @@ export async function apiRequest(
 
     if (secure) {
         defaultHeaders["auth"] = jwt
-        console.log(jwt)
     }
 
     const options: RequestInit = {
