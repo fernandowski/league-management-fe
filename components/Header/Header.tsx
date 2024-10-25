@@ -18,7 +18,6 @@ export function Header(_props: HeaderProps) {
     }
 
     useEffect(() => {
-        console.log('fetching')
         fetchOrganizations();
     }, [])
 
@@ -26,7 +25,7 @@ export function Header(_props: HeaderProps) {
         <View style={[styles.view]}>
             <View style={[styles.select]}>
                 <Text>Organizations: </Text>
-                <Select onChange={onSelectChange} data={organizations}/>
+                <Select onChange={onSelectChange} data={organizations.map(organizations => ({label: organizations.name, value: organizations.id}))}/>
             </View>
         </View>
     )

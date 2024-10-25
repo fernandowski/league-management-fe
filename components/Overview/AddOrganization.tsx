@@ -36,11 +36,10 @@ export default function AddOrganization() {
     }
 
     const handleOnSaveOrganization: SubmitHandler<CreateOrganizationData> = async (data: CreateOrganizationData): Promise<void> => {
-        const response = await apiRequest('/v1/organizations', {
+        await apiRequest('/v1/organizations', {
             method: 'POST',
             body: data
         });
-
         fetchOrganizations();
 
         setShowModal(!showModal);
