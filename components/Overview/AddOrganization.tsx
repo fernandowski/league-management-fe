@@ -6,6 +6,7 @@ import Joi from "joi";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {apiRequest} from "@/api/api";
+import {useOrganizationStore} from "@/stores/organizationStore";
 
 
 const schema = Joi.object({
@@ -23,6 +24,7 @@ interface CreateOrganizationData {
 
 export default function AddOrganization() {
     const [showModal, setShowModal] = useState<boolean>(false);
+    const {fetchOrganizations} = useOrganizationStore();
     const {control, handleSubmit, formState: {errors}} = useForm<CreateOrganizationData>(
         {
             resolver: joiResolver(schema),
@@ -33,8 +35,14 @@ export default function AddOrganization() {
         setShowModal(!showModal);
     }
 
-    const handleOnSaveOrganization: SubmitHandler<CreateOrganizationData> = async (): Promise<void> => {
-        const response = await apiRequest('/v1/organizations', {method: 'POST'})
+    const handleOnSaveOrganization: SubmitHandler<CreateOrganizationData> = async (data: CreateOrganizationData): Promise<void> => {
+        const response = await apiRequest('/v1/organizations', {
+            method: 'POST',
+            body: data
+        });
+
+        fetchOrganizations();
+
         setShowModal(!showModal);
     }
 
