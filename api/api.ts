@@ -1,4 +1,6 @@
-import {fetchJWT} from "@/util/jwt-manager";
+import {fetchJWT, JwtIsExpired, removeJWT} from "@/util/jwt-manager";
+import {router} from "expo-router";
+import {bool} from "yup";
 
 export interface RequestOptions {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -12,22 +14,35 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export async function apiRequest(
     endpoint: string,
-    { method, headers, body} : RequestOptions
-){
-    const url = `${API_URL}${endpoint}`;
-    const jwt = await fetchJWT();
+    {method, headers, body}: RequestOptions,
+    secure: boolean = true
+) {
+    const url: string = `${API_URL}${endpoint}`;
+    const jwt: string = await fetchJWT() as string;
 
-    const defaultHeaders = {
+    console.log(secure)
+    if (secure && JwtIsExpired(jwt)) {
+        console.log('expired', jwt)
+        await removeJWT();
+        router.push("/login")
+        throw new Error("jwt is expried")
+    }
+
+    const defaultHeaders: Record<string, any> = {
         'Content-Type': 'application/json',
-        auth: jwt as string,
         ...(headers || {}),
     };
+
+    if (secure) {
+        defaultHeaders["auth"] = jwt
+        console.log(jwt)
+    }
 
     const options: RequestInit = {
         method,
         credentials: 'include',
         headers: defaultHeaders,
-        ...(body && { body: JSON.stringify(body) }),
+        ...(body && {body: JSON.stringify(body)}),
     };
 
     try {
@@ -37,7 +52,6 @@ export async function apiRequest(
             const errorResponse = await response.json();
             throw new Error(errorResponse.message || errorResponse.error || 'Request failed');
         }
-
         return response.json();
     } catch (error) {
         throw error;

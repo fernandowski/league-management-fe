@@ -13,11 +13,12 @@ export function useFormSubmit() {
             const response = await apiRequest(endpoint, {
                 method: 'POST',
                 body: data
-            });
+            }, false);
             setLoading(false);
             return response;
 
         } catch (e: any) {
+            console.log(e)
             setError(e.message || `Error making request: ${endpoint}`);
             setLoading(false);
         }
