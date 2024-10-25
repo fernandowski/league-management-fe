@@ -47,6 +47,10 @@ export async function apiRequest(
         const response = await fetch(url, options);
 
         if (!response.ok) {
+            if (response.status === 401) {
+                router.push("/login");
+                throw new Error("unauthorized");
+            }
             const errorResponse = await response.json();
             throw new Error(errorResponse.message || errorResponse.error || 'Request failed');
         }
