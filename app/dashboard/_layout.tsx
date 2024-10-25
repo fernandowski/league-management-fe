@@ -18,8 +18,15 @@ export default function Layout() {
                 <Drawer.Screen
                     name="index"
                     options={{
-                        drawerLabel: 'Overview',
-                        title: 'overview',
+                        drawerLabel: 'Organizations Overview',
+                        title: 'organization overview',
+                    }}
+                />
+                <Drawer.Screen
+                    name="leagues/index"
+                    options={{
+                        drawerLabel: 'Leagues',
+                        title: 'Leagues'
                     }}
                 />
             </Drawer>
