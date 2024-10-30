@@ -4,13 +4,16 @@ import {fetchJWT} from "@/util/jwt-manager";
 
 interface OrganizationStore {
     organizations: any[];
+    organization: string | null,
     loading: boolean;
     error: string | null;
     fetchOrganizations: () => void;
+    setOrganization: (organizationId: string) => void;
 }
 
 export const useOrganizationStore = create<OrganizationStore>((set) => ({
     organizations: [],
+    organization: null,
     loading: false,
     error: null,
     fetchOrganizations: async () => {
@@ -31,4 +34,7 @@ export const useOrganizationStore = create<OrganizationStore>((set) => ({
             set({error: error.message, loading: false});
         }
     },
+    setOrganization:  (organizationId: string) => {
+        set({organization: organizationId})
+    }
 }));

@@ -13,8 +13,10 @@ interface HeaderProps {
 }
 
 export function Header(_props: HeaderProps) {
-    const {organizations, loading, error, fetchOrganizations} = useOrganizationStore();
+    const {organizations, loading, error, fetchOrganizations, setOrganization} = useOrganizationStore();
     const onSelectChange = (value: string) => {
+        console.log(value);
+        setOrganization(value);
     }
 
     useEffect(() => {
