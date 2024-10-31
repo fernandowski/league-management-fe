@@ -22,14 +22,16 @@ export default function LeagueOverview() {
 
     useEffect(() => {
         const fetchLeagues = async () => {
-            // todo: check the response
-            const response = await apiRequest(`/v1/leagues/?organization_id=${organization}`, {method: 'GET'});
-
-            setLeagues(response.map((league: leagueResponse) => ({
-                id: league.id,
-                name: league.name,
-                teamIds: league.team_ids
-            })));
+            try {
+                const response = await apiRequest(`/v1/leagues/?organization_id=${organization}`, {method: 'GET'});
+                setLeagues(response.map((league: leagueResponse) => ({
+                    id: league.id,
+                    name: league.name,
+                    teamIds: league.team_ids
+                })));
+            } catch (e) {
+                setLeagues([])
+            }
         }
 
         fetchLeagues();

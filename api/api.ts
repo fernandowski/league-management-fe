@@ -20,7 +20,6 @@ export async function apiRequest(
     const url: string = `${API_URL}${endpoint}`;
     const jwt: string = await fetchJWT() as string;
 
-    console.log(secure)
     if (secure && JwtIsExpired(jwt)) {
         await removeJWT();
         router.push("/login")
