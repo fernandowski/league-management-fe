@@ -29,6 +29,13 @@ export default function Layout() {
                         title: 'Leagues'
                     }}
                 />
+                <Drawer.Screen
+                    name="teams/index"
+                    options={{
+                        drawerLabel: 'Teams',
+                        title: 'Teams'
+                    }}
+                />
             </Drawer>
         </GestureHandlerRootView>
     );

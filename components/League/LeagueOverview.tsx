@@ -63,7 +63,7 @@ export default function LeagueOverview() {
 
     const handleSave = async (data: CreateLeagueData) => {
         try {
-            apiRequest('/v1/leagues', {
+            await apiRequest('/v1/leagues', {
                 method: 'POST',
                 body: {
                     name: data.name,
