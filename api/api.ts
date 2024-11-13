@@ -43,7 +43,7 @@ export async function apiRequest(
     };
 
     try {
-        const response = await fetch(url, options);
+        const response :Response = await fetch(url, options);
 
         if (!response.ok) {
             if (response.status === 401) {
