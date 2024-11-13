@@ -12,7 +12,7 @@ export default function TeamList (props: props) {
             <ScrollView>
                 {
                     props.data.map((item) => (
-                        <Card style={{marginBottom: 8, marginLeft: 1, marginRight: 1}} key={item.name}>
+                        <Card style={{marginBottom: 8, marginLeft: 1, marginRight: 1}} key={item.id}>
                             <Card.Content>
                                 <Text>{item.name}</Text>
                             </Card.Content>
