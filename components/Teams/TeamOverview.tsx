@@ -85,7 +85,6 @@ export default function TeamOverview() {
                 <Button style={[styles.addTeamButton]} mode={"elevated"} onPress={handleOpenModal}> + Add Team </Button>
                 <TeamList data={teams}/>
             </View>
-
             <Modal visible={showModal} dismissable={false} contentContainerStyle={[styles.modal]}>
                 <View style={[styles.formContainer]}>
                     <Text>Organization Name</Text>

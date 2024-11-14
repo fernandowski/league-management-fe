@@ -87,9 +87,11 @@ export default function LeagueOverview() {
     );
 
     return (
-        <View style={{flex: 1, marginTop: 16}}>
-            <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenModal}>+ Add League </Button>
-            <LeagueList data={leagues}></LeagueList>
+        <View style={[styles.outerContainer]}>
+            <View style={[styles.viewContainer]}>
+                <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenModal}>+ Add League </Button>
+                <LeagueList data={leagues}></LeagueList>
+            </View>
             <Modal visible={showModal} dismissable={false} contentContainerStyle={[styles.modal]}>
                 <View style={[styles.formContainer]}>
                     <Text>Organization Name</Text>
@@ -98,15 +100,16 @@ export default function LeagueOverview() {
                 </View>
             </Modal>
         </View>
+
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    viewContainer: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 8,
+        width: '80%',
+        marginTop: 16,
+        gap: 16
     },
     modal: {
         flex: 0.8,
@@ -121,5 +124,10 @@ const styles = StyleSheet.create({
     formContainer: {
         flex: 0.7,
         padding: 16
-    }
+    },
+    outerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 })
