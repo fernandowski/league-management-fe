@@ -8,7 +8,7 @@ interface props {
 }
 export default function TeamList (props: props) {
     return (
-        <View>
+        <View style={{flex: 1}}>
             <ScrollView>
                 {
                     props.data.map((item) => (

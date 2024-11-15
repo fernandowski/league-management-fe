@@ -1,7 +1,8 @@
 import {leagues} from "@/components/League/LeagueOverview";
 import {Animated, StyleSheet, View} from "react-native";
 import ScrollView = Animated.ScrollView;
-import {Card, Text} from "react-native-paper";
+import {Button, Card, Text} from "react-native-paper";
+import id from "ajv/lib/vocabularies/core/id";
 
 interface LeagueListProps {
     data: leagues[]
@@ -9,9 +10,11 @@ interface LeagueListProps {
 
 export function LeagueList(props: LeagueListProps) {
     const leagueData: leagues[] = props.data
+
+    const onPressInviteTeam = (e: any) => (console.log(e));
+
     return (
-        <View>
-            <View>
+        <View style={{flex: 1}}>
                 <ScrollView>
                     {
                         leagueData.map((league: leagues) => (
@@ -19,11 +22,13 @@ export function LeagueList(props: LeagueListProps) {
                                 <Card.Content>
                                     <Text>{league.name}</Text>
                                 </Card.Content>
+                                <Card.Actions>
+                                    <Button mode={'elevated'} onPress={() => (onPressInviteTeam(league.id))}> Invite Team </Button>
+                                </Card.Actions>
                             </Card>
                         ))
                     }
                 </ScrollView>
-            </View>
         </View>
     )
 }
