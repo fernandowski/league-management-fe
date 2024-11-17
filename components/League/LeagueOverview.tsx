@@ -10,6 +10,7 @@ import {joiResolver} from "@hookform/resolvers/joi";
 import Joi from "joi";
 import {useFocusEffect} from "expo-router";
 import {useLeagueData} from "@/hooks/useLeagueData";
+import LeagueDropdown from "@/components/League/LeagueDropdown";
 
 
 const schema = Joi.object({
@@ -65,6 +66,9 @@ export default function LeagueOverview() {
 
     return (
         <View style={[styles.outerContainer]}>
+            <View>
+                <LeagueDropdown></LeagueDropdown>
+            </View>
             <View style={[styles.viewContainer]}>
                 <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenModal}>+ Add League </Button>
                 <LeagueList data={data}></LeagueList>
