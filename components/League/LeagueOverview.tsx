@@ -9,19 +9,8 @@ import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import Joi from "joi";
 import {useFocusEffect} from "expo-router";
+import {useLeagueData} from "@/hooks/useLeagueData";
 
-
-export interface leagues {
-    id: string
-    name: string
-    teamIds: string[]
-}
-
-export interface leagueResponse {
-    id: string
-    name: string
-    team_ids: string[]
-}
 
 const schema = Joi.object({
     name: Joi.string()
@@ -37,8 +26,9 @@ interface CreateLeagueData {
 
 export default function LeagueOverview() {
     const {organization} = useOrganizationStore();
-    const [leagues, setLeagues] = useState<leagues[]>([]);
     const [showModal, setShowModal] = useState(false);
+    const {fetchData, fetching, error, data} = useLeagueData();
+
     const {control, handleSubmit, formState: {errors}} = useForm<CreateLeagueData>(
         {
             resolver: joiResolver(schema),
@@ -47,19 +37,6 @@ export default function LeagueOverview() {
     const handleOpenModal = () => {
         setShowModal(!showModal);
     };
-
-    const fetchLeagues = useCallback(async () => {
-        try {
-            const response = await apiRequest(`/v1/leagues/?organization_id=${organization}`, {method: 'GET'});
-            setLeagues(response.map((league: leagueResponse) => ({
-                id: league.id,
-                name: league.name,
-                teamIds: league.team_ids
-            })));
-        } catch (e) {
-            setLeagues([]);
-        }
-    }, [organization]);
 
     const handleSave = async (data: CreateLeagueData) => {
         try {
@@ -70,7 +47,7 @@ export default function LeagueOverview() {
                     organization_id: organization
                 }
             })
-            fetchLeagues();
+            fetchData({organization_id: organization})
             setShowModal(!showModal);
         } catch (e) {
 
@@ -79,18 +56,18 @@ export default function LeagueOverview() {
 
     useFocusEffect(
         useCallback(() => {
-            fetchLeagues();
+            fetchData({organization_id: organization})
             return () => {
                 setShowModal(false);
             };
-        }, [fetchLeagues])
+        }, [organization])
     );
 
     return (
         <View style={[styles.outerContainer]}>
             <View style={[styles.viewContainer]}>
                 <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenModal}>+ Add League </Button>
-                <LeagueList data={leagues}></LeagueList>
+                <LeagueList data={data}></LeagueList>
             </View>
             <Modal visible={showModal} dismissable={false} contentContainerStyle={[styles.modal]}>
                 <View style={[styles.formContainer]}>
