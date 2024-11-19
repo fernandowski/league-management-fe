@@ -1,16 +1,10 @@
 import {useOrganizationStore} from "@/stores/organizationStore";
-import {useCallback, useEffect, useState} from "react";
-import {apiRequest} from "@/api/api";
+import {useCallback, useState} from "react";
 import {LeagueList} from "@/components/League/LeagueList";
 import {StyleSheet, View} from "react-native";
-import {Button, Modal, Text} from "react-native-paper";
-import ControlledTextInput from "@/components/FormControls/ControlledTextInput";
-import {useForm} from "react-hook-form";
-import {joiResolver} from "@hookform/resolvers/joi";
-import Joi from "joi";
+import {Button} from "react-native-paper";
 import {useFocusEffect} from "expo-router";
 import {useLeagueData} from "@/hooks/useLeagueData";
-import LeagueDropdown from "@/components/League/LeagueDropdown";
 import AddLeagueModal from "@/components/League/AddLeagueModal";
 import LeagueMembershipModal from "@/components/League/LeagueMembershipModal";
 
@@ -19,12 +13,7 @@ export default function LeagueOverview() {
     const [selectedLeague, setSelectedLeague] = useState<null | string>(null);
     const [openAddLeagueModal, setOpenAddLeagueModal] = useState<boolean>(false);
     const [showLeagueMembershipModal, setShowLeagueMembershipModal] = useState(false);
-
-
     const {fetchData, fetching, error, data} = useLeagueData();
-
-
-
 
     const handleLeagueMembershipOpenModal = (leagueId: string) => {
         setShowLeagueMembershipModal(!showLeagueMembershipModal);
