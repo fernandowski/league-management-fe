@@ -4,7 +4,11 @@ import {StyleSheet, Text, View} from "react-native";
 import {Select} from "@/components/Select/Select";
 import {useEffect} from "react";
 
-export default function LeagueDropdown() {
+
+export interface Props {
+    onChange: (value: string) => void
+}
+export default function LeagueDropdown(props: Props) {
     const {organization} = useOrganizationStore();
     const {fetchData, data} = useLeagueData()
 
@@ -13,7 +17,7 @@ export default function LeagueDropdown() {
     }, [organization])
 
     const onSelectChange = (value: string) => {
-        console.log(value)
+        // props.onChange(value)
     }
 
     return (

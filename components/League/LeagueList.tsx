@@ -5,13 +5,13 @@ import {Button, Card, Text} from "react-native-paper";
 import id from "ajv/lib/vocabularies/core/id";
 
 interface LeagueListProps {
-    data: leagues[]
+    data: leagues[],
+    onPressInviteTeam: (id: string) => void
 }
 
 export function LeagueList(props: LeagueListProps) {
     const leagueData: leagues[] = props.data
 
-    const onPressInviteTeam = (e: any) => (console.log(e));
 
     return (
         <View style={{flex: 1}}>
@@ -23,7 +23,7 @@ export function LeagueList(props: LeagueListProps) {
                                     <Text>{league.name}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button mode={'elevated'} onPress={() => (onPressInviteTeam(league.id))}> Invite Team </Button>
+                                    <Button mode={'elevated'} onPress={() => (props.onPressInviteTeam(league.id))}> Invite Team </Button>
                                 </Card.Actions>
                             </Card>
                         ))
