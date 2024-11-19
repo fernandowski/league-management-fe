@@ -51,7 +51,7 @@ export default function AddLeagueModal(props: AddLeagueModalProps) {
     return (
         <Modal visible={props.open} dismissable={true} contentContainerStyle={[styles.modal]}>
             <View style={[styles.formContainer]}>
-                <Text>Organization Name</Text>
+                <Text>Team Name</Text>
                 <ControlledTextInput label='Name' name={'name'} control={control} error={errors.name?.message}/>
                 <Button style={{alignSelf: "flex-end"}} onPress={handleSubmit(handleSave)}>Save</Button>
             </View>

@@ -1,5 +1,6 @@
 import {StyleSheet, View} from "react-native";
 import {Modal, Text} from "react-native-paper";
+import MembershipManagement from "@/components/League/MembershipManagement";
 
 export interface LeagueMembershipModalProps {
     organizationId: string,
@@ -7,11 +8,12 @@ export interface LeagueMembershipModalProps {
     onDismiss: () => void,
     open: boolean
 }
+
 export default function LeagueMembershipModal(props: LeagueMembershipModalProps) {
     return (
         <Modal visible={props.open} dismissable={true} contentContainerStyle={[styles.modal]} onDismiss={props.onDismiss}>
             <View style={[styles.container]}>
-                <Text>{props.leagueId}</Text>
+                <MembershipManagement leagueId={props.leagueId}/>
             </View>
         </Modal>
     )
