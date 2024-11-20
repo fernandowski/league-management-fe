@@ -11,10 +11,8 @@ export interface LeagueMembershipModalProps {
 
 export default function LeagueMembershipModal(props: LeagueMembershipModalProps) {
     return (
-        <Modal visible={props.open} dismissable={true} contentContainerStyle={[styles.modal]} onDismiss={props.onDismiss}>
-            <View style={[styles.container]}>
-                <MembershipManagement leagueId={props.leagueId}/>
-            </View>
+        <Modal visible={props.open} contentContainerStyle={[styles.modal]} onDismiss={props.onDismiss}>
+            <MembershipManagement leagueId={props.leagueId}/>
         </Modal>
     )
 }

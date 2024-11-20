@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import LeagueMembers, {LeagueMember} from "@/components/League/LeagueMembers";
 import {LeagueMembershipResponse, useData} from "@/hooks/useData";
+import {View} from "react-native";
 
 export interface MembershipManagementProps {
     leagueId: string | null
@@ -21,10 +22,17 @@ export default function MembershipManagement(props: MembershipManagementProps) {
             setLeagueMembers(leagueMembers);
         }
     }
+
+    const handleOnRemove = (teamId: string): void => {
+        console.log(teamId);
+    }
     useEffect(() => {
         fetchMembership();
     }, []);
     return (
-        <LeagueMembers members={leagueMembers}/>
+        <View style={{flex: 1}}>
+            <LeagueMembers members={leagueMembers} onRemove={handleOnRemove}/>
+        </View>
+
     )
 }
