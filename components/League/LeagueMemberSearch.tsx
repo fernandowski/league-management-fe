@@ -3,6 +3,7 @@ import {Searchbar, Text} from "react-native-paper";
 import {View} from "react-native";
 import {TeamResponse, useData} from "@/hooks/useData";
 import LoadingView from "@expo/metro-runtime/build/LoadingView.native";
+import {useDebounce} from "@/hooks/useDebounce";
 
 export interface LeagueMemberSearchProps {
     organizationId: string
@@ -16,19 +17,21 @@ export default function LeagueMemberSearch(props: LeagueMemberSearchProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const {fetchData, fetching, error} = useData<TeamResponse[]>();
     const [teams, setTeams] = useState<Team[]>([]);
+    const debouncedSearchQuery = useDebounce(searchQuery, 1000);
 
-    const fetchTeams = async () => {
-        const response = await fetchData(`/v1/teams/?organization_id=${props.organizationId}&term=${searchQuery}`);
+    const fetchTeams = async (term: string) => {
+        const encodedTerm = encodeURIComponent(`%${term}%`)
+        const response = await fetchData(`/v1/teams/?organization_id=${props.organizationId}&term=${encodedTerm}`);
         if (response) {
             const teams: Team[] = response.map((team: Team) => ({id: team.id, name: team.name}));
             setTeams(teams)
         }
     }
     useEffect(() => {
-        if (searchQuery !== '') {
-            fetchTeams()
+        if (debouncedSearchQuery !== '' && !fetching) {
+            fetchTeams(debouncedSearchQuery)
         }
-    }, [searchQuery]);
+    }, [debouncedSearchQuery]);
 
     return (
         <View>
