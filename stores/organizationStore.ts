@@ -30,7 +30,6 @@ export const useOrganizationStore = create<OrganizationStore>((set) => ({
             set({organizations: response, loading: false});
 
         } catch (error: any) {
-            console.log(error)
             set({error: error.message, loading: false});
         }
     },

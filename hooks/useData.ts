@@ -9,6 +9,10 @@ export interface LeagueMembershipResponse {
     team_name: string,
 }
 
+export interface TeamResponse {
+    id: string
+    name: string
+}
 export function useData<TResponse>() {
     const [fetching, setFetching] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null)

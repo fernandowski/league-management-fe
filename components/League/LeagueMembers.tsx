@@ -16,8 +16,8 @@ export interface LeagueMembersProps {
 
 export default function LeagueMembers(props: LeagueMembersProps) {
     return (
-        <View>
-            <Card>
+        <View style={[styles.container]}>
+            <Card style={[styles.card]}>
                 <Card.Title title={"League Members"}/>
                 <Card.Content>
                         {
@@ -51,5 +51,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent:"space-between",
         alignItems: "center"
+    },
+    container: {
+        height: '50%'
+    },
+    card: {
+        height: '100%'
     }
 });

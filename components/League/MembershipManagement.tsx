@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import LeagueMembers, {LeagueMember} from "@/components/League/LeagueMembers";
 import {LeagueMembershipResponse, useData} from "@/hooks/useData";
 import {View} from "react-native";
+import LeagueMemberSearch from "@/components/League/LeagueMemberSearch";
+import {useOrganizationStore} from "@/stores/organizationStore";
 
 export interface MembershipManagementProps {
     leagueId: string | null
@@ -9,6 +11,7 @@ export interface MembershipManagementProps {
 export default function MembershipManagement(props: MembershipManagementProps) {
     const [leagueMembers, setLeagueMembers] = useState<LeagueMember[]>([]);
     const {fetchData, fetching, error} = useData<LeagueMembershipResponse[]>();
+    const {organization}= useOrganizationStore();
 
     const fetchMembership = async () => {
         const response = await fetchData(`/v1/leagues/${props.leagueId}/members`);
@@ -32,6 +35,9 @@ export default function MembershipManagement(props: MembershipManagementProps) {
     return (
         <View style={{flex: 1}}>
             <LeagueMembers members={leagueMembers} onRemove={handleOnRemove}/>
+            <View style={{marginTop: 8}}>
+                <LeagueMemberSearch organizationId={organization ? organization : ''}/>
+            </View>
         </View>
 
     )
