@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
         padding: 16,
         backgroundColor: "white",
         width: "100%",
-        maxHeight: 400,
-        maxWidth: 400,
+        maxHeight: '90%',
+        maxWidth: '90%',
         zIndex: 200,
         alignSelf: "center"
     },

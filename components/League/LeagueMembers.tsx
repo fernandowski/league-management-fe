@@ -23,10 +23,13 @@ export default function LeagueMembers(props: LeagueMembersProps) {
                         {
                             props.members.map((member: LeagueMember) => {
                                 return (
-                                    <View style={styles.row}>
-                                        <Text key={member.id}>{member.teamName}</Text>
-                                        <Button mode={'contained'} style={[styles.button]} onPress={() => props.onRemove(member.id)}>Remove</Button>
-                                    </View>
+                                    <>
+                                        <Divider style={{marginTop: 4}}/>
+                                        <View style={styles.row} key={member.id}>
+                                            <Text key={member.id}>{member.teamName}</Text>
+                                            <Button mode={'contained'} style={[styles.button]} onPress={() => props.onRemove(member.id)}>Remove</Button>
+                                        </View>
+                                    </>
                                 )
                             })
                         }
