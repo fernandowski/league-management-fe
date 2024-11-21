@@ -8,10 +8,11 @@ import {useOrganizationStore} from "@/stores/organizationStore";
 export interface MembershipManagementProps {
     leagueId: string | null
 }
+
 export default function MembershipManagement(props: MembershipManagementProps) {
     const [leagueMembers, setLeagueMembers] = useState<LeagueMember[]>([]);
     const {fetchData, fetching, error} = useData<LeagueMembershipResponse[]>();
-    const {organization}= useOrganizationStore();
+    const {organization} = useOrganizationStore();
 
     const fetchMembership = async () => {
         const response = await fetchData(`/v1/leagues/${props.leagueId}/members`);
@@ -34,10 +35,15 @@ export default function MembershipManagement(props: MembershipManagementProps) {
     }, []);
     return (
         <View style={{flex: 1}}>
-            <LeagueMembers members={leagueMembers} onRemove={handleOnRemove}/>
             <View style={{marginTop: 8}}>
-                <LeagueMemberSearch organizationId={organization ? organization : ''}/>
+                <LeagueMemberSearch
+                    organizationId={organization ? organization : ''}
+                    leagueId={props.leagueId ? props.leagueId : ''}
+                    onTeamAdded={fetchMembership}
+                    members={leagueMembers}
+                />
             </View>
+            <LeagueMembers members={leagueMembers} onRemove={handleOnRemove}/>
         </View>
 
     )

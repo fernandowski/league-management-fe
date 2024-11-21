@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     container: {
-        height: '50%'
+        height: '50%',
+        marginTop: 16
     },
     card: {
         height: '100%'
