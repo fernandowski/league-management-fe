@@ -8,10 +8,11 @@ export default function Layout() {
     const dimensions = useWindowDimensions();
     return (
         <GestureHandlerRootView style={{flex: 1}}>
-            <Drawer screenOptions={{
-                drawerType: dimensions.width >= 768 ? 'permanent' : 'slide',
-                header: ({navigation, route, options}) => {
-                    return <Header navigation={navigation} route={route} options={options}/>
+            <Drawer
+                screenOptions={{
+                drawerType: 'permanent',
+                header: () => {
+                    return <Header/>
                 },
             }}
             >

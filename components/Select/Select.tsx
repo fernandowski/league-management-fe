@@ -6,6 +6,7 @@ import {useEffect, useRef, useState} from "react";
 interface SelectProps {
     onChange: (value: string) => void
     data: { value: string, label: string }[]
+    selected: string | null
 }
 
 export function Select(props: SelectProps) {
@@ -14,12 +15,12 @@ export function Select(props: SelectProps) {
 
     useEffect(() => {
         if (props.data.length > 0 && !isDefaultSet.current) {
-            const defaultValue = props.data[0].value;
+            const defaultValue = props.selected || props.data[0].value;
             setSelectedValue(defaultValue);
             props.onChange(defaultValue);
             isDefaultSet.current = true
         }
-    }, [props.data]);
+    }, []);
     return (
         <View>
             <Picker

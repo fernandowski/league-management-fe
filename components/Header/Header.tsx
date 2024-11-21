@@ -12,8 +12,8 @@ interface HeaderProps {
     options: DrawerNavigationOptions
 }
 
-export function Header(_props: HeaderProps) {
-    const {organizations, loading, error, fetchOrganizations, setOrganization} = useOrganizationStore();
+export function Header() {
+    const {organizations, loading, error, fetchOrganizations, setOrganization, organization} = useOrganizationStore();
     const onSelectChange = (value: string) => {
         setOrganization(value);
     }
@@ -26,7 +26,7 @@ export function Header(_props: HeaderProps) {
         <View style={[styles.view]}>
             <View style={[styles.select]}>
                 <Text>Organizations: </Text>
-                <Select onChange={onSelectChange} data={organizations.map(organizations => ({label: organizations.name, value: organizations.id}))}/>
+                <Select onChange={onSelectChange} selected={organization} data={organizations.map(organizations => ({label: organizations.name, value: organizations.id}))}/>
             </View>
         </View>
     )
