@@ -4,17 +4,19 @@ import {View, useWindowDimensions, Text} from "react-native";
 import {Header} from "@/components/Header/Header";
 
 export default function Layout() {
-
     const dimensions = useWindowDimensions();
+    const isLargeScreen = dimensions.width >= 768;
+
     return (
         <GestureHandlerRootView style={{flex: 1}}>
             <Drawer
                 screenOptions={{
-                drawerType: 'permanent',
-                header: () => {
-                    return <Header/>
-                },
-            }}
+                    drawerType: isLargeScreen ? 'permanent': undefined,
+                    header: () => {
+                        return <Header/>
+                    },
+                    drawerPosition: 'left',
+                }}
             >
                 <Drawer.Screen
                     name="index"
