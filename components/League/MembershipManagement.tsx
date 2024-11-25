@@ -4,6 +4,7 @@ import {LeagueMembershipResponse, useData} from "@/hooks/useData";
 import {View} from "react-native";
 import LeagueMemberSearch from "@/components/League/LeagueMemberSearch";
 import {useOrganizationStore} from "@/stores/organizationStore";
+import {apiRequest} from "@/api/api";
 
 export interface MembershipManagementProps {
     leagueId: string | null
@@ -27,8 +28,9 @@ export default function MembershipManagement(props: MembershipManagementProps) {
         }
     }
 
-    const handleOnRemove = (teamId: string): void => {
-        console.log(teamId);
+    const handleOnRemove = async (membershipId: string): Promise<void> => {
+        await apiRequest(`/v1/leagues/${props.leagueId}/members/${membershipId}`, {method: 'DELETE'})
+        fetchMembership();
     }
     useEffect(() => {
         fetchMembership();
