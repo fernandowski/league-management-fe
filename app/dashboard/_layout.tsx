@@ -39,6 +39,13 @@ export default function Layout() {
                         title: 'Teams'
                     }}
                 />
+                <Drawer.Screen
+                    name="seasons/index"
+                    options={{
+                        drawerLabel: 'Seasons',
+                        title: 'Seasons'
+                    }}
+                />
             </Drawer>
         </GestureHandlerRootView>
     );

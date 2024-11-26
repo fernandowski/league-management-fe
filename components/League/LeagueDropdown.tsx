@@ -13,17 +13,19 @@ export default function LeagueDropdown(props: Props) {
     const {fetchData, data} = useLeagueData()
 
     useEffect(() => {
-        fetchData({organization_id: organization})
+        if (organization !== null) {
+            fetchData({organization_id: organization})
+        }
     }, [organization])
 
     const onSelectChange = (value: string) => {
-        // props.onChange(value)
+        props.onChange(value)
     }
 
     return (
         <View style={[styles.select]}>
             <Text>Leagues: </Text>
-            <Select onChange={onSelectChange} data={data.map(league => ({label: league.name, value: league.id}))}/>
+            <Select onChange={onSelectChange} data={data.map(league => ({label: league.name, value: league.id}))} selected={data.length > 0 ? data[0].id : null}/>
         </View>
     )
 }
