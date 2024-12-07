@@ -3,6 +3,7 @@ import SeasonSearchBar from "@/components/Seasons/SeasonSearchBar";
 import {Button} from "react-native-paper";
 import AddSeasonModal from "@/components/Seasons/AddSeasonModal";
 import {useState} from "react";
+import SeasonsTable from "@/components/Seasons/SeasonsTable";
 
 export default function Index() {
     const [openModal, setOpenModal] = useState<boolean>(false);
@@ -15,7 +16,6 @@ export default function Index() {
         setOpenModal(!openModal);
     }
 
-
     return (
         <View style={[styles.outerContainer]}>
             <View style={[styles.viewContainer]}>
@@ -24,7 +24,7 @@ export default function Index() {
                     <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
                 </View>
                 <View style={[styles.tableContainer]}>
-
+                    <SeasonsTable leagueId={leagueId || ''}></SeasonsTable>
                 </View>
             </View>
             <AddSeasonModal onSave={() => setOpenModal(!openModal)} open={openModal} leagueId={leagueId || ""}/>
