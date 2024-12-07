@@ -62,7 +62,7 @@ export default function SeasonsTable(props: SeasonTableIProps) {
     }, [numberOfItemsPerPage, organization]);
 
     return (
-        <View style={{flex: 1, padding: 19}}>
+        <View style={{flex: 1}}>
             <DataTable>
                 <DataTable.Header>
                     <DataTable.Title>Name</DataTable.Title>
