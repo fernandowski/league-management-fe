@@ -4,7 +4,6 @@ import {LeagueList} from "@/components/League/LeagueList";
 import {StyleSheet, View} from "react-native";
 import {Button} from "react-native-paper";
 import {useFocusEffect} from "expo-router";
-import {useLeagueData} from "@/hooks/useLeagueData";
 import AddLeagueModal from "@/components/League/AddLeagueModal";
 import LeagueMembershipModal from "@/components/League/LeagueMembershipModal";
 
@@ -13,7 +12,7 @@ export default function LeagueOverview() {
     const [selectedLeague, setSelectedLeague] = useState<null | string>(null);
     const [openAddLeagueModal, setOpenAddLeagueModal] = useState<boolean>(false);
     const [showLeagueMembershipModal, setShowLeagueMembershipModal] = useState(false);
-    const {fetchData, fetching, error, data} = useLeagueData();
+    const [refreshList, setRefreshList] = useState<boolean>(false);
 
     const handleLeagueMembershipOpenModal = (leagueId: string) => {
         setShowLeagueMembershipModal(!showLeagueMembershipModal);
@@ -21,18 +20,17 @@ export default function LeagueOverview() {
     }
 
     const handleOpenAddLeagueModal = (): void => {
-        setOpenAddLeagueModal(!openAddLeagueModal)
+        setOpenAddLeagueModal(!openAddLeagueModal);
     }
 
     const handleSaveLeague = (): void => {
-        setOpenAddLeagueModal(!openAddLeagueModal)
-        fetchData({organization_id: organization})
+        setOpenAddLeagueModal(!openAddLeagueModal);
+        setRefreshList(!refreshList);
     }
 
 
     useFocusEffect(
         useCallback(() => {
-            fetchData({organization_id: organization})
             return () => {
                 setOpenAddLeagueModal(false);
                 setShowLeagueMembershipModal(false);
@@ -44,7 +42,7 @@ export default function LeagueOverview() {
         <View style={[styles.outerContainer]}>
             <View style={[styles.viewContainer]}>
                 <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenAddLeagueModal}>+ Add League </Button>
-                <LeagueList data={data} onPressInviteTeam={handleLeagueMembershipOpenModal}></LeagueList>
+                <LeagueList refresh={refreshList} onPressInviteTeam={handleLeagueMembershipOpenModal}></LeagueList>
             </View>
             <AddLeagueModal open={openAddLeagueModal} onSave={handleSaveLeague}/>
             <LeagueMembershipModal organizationId={organization ? organization : ""} leagueId={selectedLeague} open={showLeagueMembershipModal} onDismiss={() =>  (setShowLeagueMembershipModal(false))}/>

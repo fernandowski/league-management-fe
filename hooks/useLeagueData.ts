@@ -1,7 +1,11 @@
 import {useState} from "react";
 import {apiRequest} from "@/api/api";
-export interface LeagueSearchParams  {
+
+export interface LeagueSearchParams {
     organization_id: string | null
+    limit: number
+    offset: number
+    term: string | ''
 }
 
 export interface League {
@@ -16,7 +20,12 @@ export interface LeagueResponse {
     team_ids: string[]
 }
 
-export function useLeagueData(): {fetchData: (params: LeagueSearchParams) => Promise<void>, fetching: boolean, error: null | string, data: League[]}  {
+export function useLeagueData(): {
+    fetchData: (params: LeagueSearchParams) => Promise<void>,
+    fetching: boolean,
+    error: null | string,
+    data: League[]
+} {
     const [fetching, setFetching] = useState(false);
     const [error, setError] = useState<null | string>(null);
     const [data, setData] = useState<League[]>([])
@@ -24,12 +33,16 @@ export function useLeagueData(): {fetchData: (params: LeagueSearchParams) => Pro
     const fetchData = async (params: LeagueSearchParams): Promise<void> => {
         setFetching(true);
         try {
+            const offsetQuery = `offset=${params.offset}`;
+            const limitQuery = `limit=${params.limit}`;
+            const termQuery = params.term.trim() !== '' ? `term=${params.term}` : '';
+            const organizationQuery = `organization_id=${params.organization_id}`;
             const response: LeagueResponse[] = await apiRequest(
-                `/v1/leagues?organization_id=${params.organization_id}`,
+                `/v1/leagues?${[offsetQuery, limitQuery, termQuery, organizationQuery].join('&')}`,
                 {method: "GET"}
             );
             setFetching(false);
-            const leagues : League[] =  response.map((league: LeagueResponse) => ({
+            const leagues: League[] = response.map((league: LeagueResponse) => ({
                 id: league.id,
                 name: league.name,
                 teamIds: league.team_ids
@@ -42,5 +55,5 @@ export function useLeagueData(): {fetchData: (params: LeagueSearchParams) => Pro
         }
     };
 
-    return { fetchData, fetching, error, data};
+    return {fetchData, fetching, error, data};
 }

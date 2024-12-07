@@ -1,6 +1,9 @@
 import {useOrganizationStore} from "@/stores/organizationStore";
 import AddOrganization from "@/components/Overview/AddOrganization";
 import {OrganizationTable} from "@/components/Overview/OrganizationTable";
+import {View} from "react-native";
+import {Text} from "react-native-paper";
+import LeagueOverview from "@/components/League/LeagueOverview";
 
 export default function Overview() {
 
@@ -11,10 +14,6 @@ export default function Overview() {
     }
 
     return (
-
-        <>
-            {organizations.length >= 1 ? <OrganizationTable/> : <AddOrganization/>}
-        </>
-
+        <LeagueOverview/>
     )
 }
