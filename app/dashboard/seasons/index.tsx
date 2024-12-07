@@ -8,6 +8,7 @@ import SeasonsTable from "@/components/Seasons/SeasonsTable";
 export default function Index() {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [leagueId, setLeagueId] = useState<null | string>(null)
+    const [refresh, setRefresh] = useState(false);
     const onLeagueSelection = (value: string) =>  {
       setLeagueId(value);
     };
@@ -15,6 +16,11 @@ export default function Index() {
     const openSeasonModal = () => {
         setOpenModal(!openModal);
     }
+
+    const handleSave = () => {
+        setOpenModal(false);
+        setRefresh(!refresh);
+    };
 
     return (
         <View style={[styles.outerContainer]}>
@@ -24,10 +30,10 @@ export default function Index() {
                     <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
                 </View>
                 <View style={[styles.tableContainer]}>
-                    <SeasonsTable leagueId={leagueId || ''}></SeasonsTable>
+                    <SeasonsTable leagueId={leagueId || ''} refresh={refresh}></SeasonsTable>
                 </View>
             </View>
-            <AddSeasonModal onSave={() => setOpenModal(!openModal)} open={openModal} leagueId={leagueId || ""}/>
+            <AddSeasonModal onSave={handleSave} open={openModal} leagueId={leagueId || ""}/>
         </View>
     )
 }

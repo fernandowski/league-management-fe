@@ -8,6 +8,7 @@ import {useEffect} from "react";
 export interface Props {
     onChange: (value: string) => void
 }
+
 export default function LeagueDropdown(props: Props) {
     const {organization} = useOrganizationStore();
     const {fetchData, data} = useLeagueData()
@@ -18,6 +19,10 @@ export default function LeagueDropdown(props: Props) {
         }
     }, [organization])
 
+    useEffect(() => {
+        if (data.length > 0) props.onChange(data[0].id)
+    }, [data]);
+
     const onSelectChange = (value: string) => {
         props.onChange(value)
     }
@@ -25,7 +30,11 @@ export default function LeagueDropdown(props: Props) {
     return (
         <View style={[styles.select]}>
             <Text>Leagues: </Text>
-            <Select onChange={onSelectChange} data={data.map(league => ({label: league.name, value: league.id}))} selected={data.length > 0 ? data[0].id : null}/>
+            <Select
+                onChange={onSelectChange}
+                data={data.map(league => ({label: league.name, value: league.id}))}
+                selected={data.length > 0 ? data[0].id : null}
+            />
         </View>
     )
 }

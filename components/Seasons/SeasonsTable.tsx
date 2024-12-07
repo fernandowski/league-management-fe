@@ -2,6 +2,7 @@ import {View} from "react-native";
 import {DataTable} from "react-native-paper";
 import {useEffect, useState} from "react";
 import {useData} from "@/hooks/useData";
+import {useOrganizationStore} from "@/stores/organizationStore";
 
 interface Season {
     id: string;
@@ -16,6 +17,7 @@ interface SeasonResponse {
 
 interface SeasonTableIProps {
     leagueId: string;
+    refresh: boolean;
 }
 
 const numberOfItemsPerPageList = [5, 10, 25];
@@ -27,6 +29,7 @@ export default function SeasonsTable(props: SeasonTableIProps) {
     const [numberOfItemsPerPage, onItemsPerPageChange] = useState(
         numberOfItemsPerPageList[0]
     );
+    const {organization} = useOrganizationStore();
 
     const {fetchData, fetching, error} = useData<SeasonResponse>();
 
@@ -50,11 +53,13 @@ export default function SeasonsTable(props: SeasonTableIProps) {
             }
         };
         fetchSeasons();
-    }, [props.leagueId, page, numberOfItemsPerPage]);
+    }, [props.leagueId, page, numberOfItemsPerPage, props.refresh]);
 
     useEffect(() => {
-        setPage(0);
-    }, [numberOfItemsPerPage]);
+        if (page !== 0) {
+            setPage(0);
+        }
+    }, [numberOfItemsPerPage, organization]);
 
     return (
         <View style={{flex: 1, padding: 19}}>
@@ -69,7 +74,7 @@ export default function SeasonsTable(props: SeasonTableIProps) {
                 ))}
 
                 {emptyRows > 0 &&
-                    Array.from({ length: emptyRows }).map((_, index) => (
+                    Array.from({length: emptyRows}).map((_, index) => (
                         <DataTable.Row key={`empty-${index}`}>
                             <DataTable.Cell>{'\u00A0'}</DataTable.Cell>
                         </DataTable.Row>
