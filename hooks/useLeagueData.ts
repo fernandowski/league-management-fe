@@ -14,21 +14,27 @@ export interface League {
     teamIds: string[]
 }
 
-export interface LeagueResponse {
+
+export interface LeagueAPIResponse {
     id: string
     name: string
-    team_ids: string[]
+}
+export interface LeagueResponse {
+    data: LeagueAPIResponse[]
+    total: number
 }
 
 export function useLeagueData(): {
     fetchData: (params: LeagueSearchParams) => Promise<void>,
     fetching: boolean,
     error: null | string,
-    data: League[]
+    data: League[],
+    total: number
 } {
     const [fetching, setFetching] = useState(false);
     const [error, setError] = useState<null | string>(null);
-    const [data, setData] = useState<League[]>([])
+    const [data, setData] = useState<League[]>([]);
+    const [total, setTotal] = useState(0);
 
     const fetchData = async (params: LeagueSearchParams): Promise<void> => {
         setFetching(true);
@@ -37,23 +43,24 @@ export function useLeagueData(): {
             const limitQuery = `limit=${params.limit}`;
             const termQuery = params.term.trim() !== '' ? `term=${params.term}` : '';
             const organizationQuery = `organization_id=${params.organization_id}`;
-            const response: LeagueResponse[] = await apiRequest(
+            const response: LeagueResponse = await apiRequest(
                 `/v1/leagues?${[offsetQuery, limitQuery, termQuery, organizationQuery].join('&')}`,
                 {method: "GET"}
             );
             setFetching(false);
-            const leagues: League[] = response.map((league: LeagueResponse) => ({
+            const leagues: League[] = response.data.map((league: LeagueAPIResponse) => ({
                 id: league.id,
                 name: league.name,
-                teamIds: league.team_ids
+                teamIds: []
             }))
 
             setData(leagues)
+            setTotal(response.total)
         } catch (e) {
             setError("Error Fetching leagues");
             setFetching(false);
         }
     };
 
-    return {fetchData, fetching, error, data};
+    return {fetchData, fetching, error, data, total};
 }

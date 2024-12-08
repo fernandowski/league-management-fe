@@ -12,16 +12,15 @@ interface LeagueListProps {
 }
 
 export function LeagueList(props: LeagueListProps): React.JSX.Element {
-    const {fetchData, fetching, error, data} = useLeagueData();
+    const {fetchData, fetching, error, data, total} = useLeagueData();
     const {organization} = useOrganizationStore()
 
     const [page, setPage] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(5);
-    const [totalItems, setTotalItems] = useState(0);
 
     useEffect(() => {
         if (organization !== null) {
-            setPage(0)
+            setPage(0);
             fetchData({organization_id: organization, limit: itemsPerPage, offset: 0, term: ""});
         }
 
@@ -41,7 +40,7 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
 
     return (
         <View style={{flex: 1}}>
-            <Pagination currentPage={page} totalItems={100} itemsPerPage={itemsPerPage} onPageChange={setPage}/>
+            <Pagination currentPage={page} totalItems={total} itemsPerPage={itemsPerPage} onPageChange={setPage}/>
                 <ScrollView>
                     {
                         data.map((league) => (
