@@ -28,13 +28,18 @@ export default function LeagueDropdown(props: Props) {
         props.onChange(value)
     }
 
+    let selected = data.length > 0 ? data[0].id : null
+    if (props.selected) {
+        selected = props.selected
+    }
+
     return (
         <View style={[styles.select]}>
             <Text>Leagues: </Text>
             <Select
                 onChange={onSelectChange}
                 data={data.map(league => ({label: league.name, value: league.id}))}
-                selected={data.length > 0 ? data[0].id : null}
+                selected={selected}
             />
         </View>
     )
