@@ -1,5 +1,5 @@
 import {View, StyleSheet} from "react-native";
-import {Button, Modal, Text} from "react-native-paper";
+import {Button, Modal, Portal, Text} from "react-native-paper";
 import TeamList from "@/components/Teams/TeamList";
 import {useOrganizationStore} from "@/stores/organizationStore";
 import {useCallback, useState} from "react";
@@ -9,6 +9,7 @@ import ControlledTextInput from "@/components/FormControls/ControlledTextInput";
 import Joi from "joi";
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
+import ViewContent from "@/components/Layout/ViewContent";
 
 export interface Team {
     id: string
@@ -80,35 +81,24 @@ export default function TeamOverview() {
     )
 
     return (
-        <View style={[styles.outerContainer]}>
-            <View style={[styles.viewContainer]}>
-                <Button style={[styles.addTeamButton]} mode={"elevated"} onPress={handleOpenModal}> + Add Team </Button>
-                <TeamList data={teams}/>
-            </View>
-            <Modal visible={showModal} dismissable={false} contentContainerStyle={[styles.modal]}>
-                <View style={[styles.formContainer]}>
-                    <Text>Organization Name</Text>
-                    <ControlledTextInput label='Name' name={'name'} control={control} error={errors.name?.message}/>
-                    <Button style={{alignSelf: "flex-end"}} onPress={handleSubmit(handleSave)}>Save</Button>
-                </View>
-            </Modal>
-        </View>
+        <ViewContent>
+            <Button style={[styles.addTeamButton]} mode={"elevated"} onPress={handleOpenModal}> + Add Team </Button>
+            <TeamList data={teams}/>
+            <Portal>
+                <Modal visible={showModal} dismissable={false} contentContainerStyle={[styles.modal]}>
+                    <View style={[styles.formContainer]}>
+                        <Text>Organization Name</Text>
+                        <ControlledTextInput label='Name' name={'name'} control={control} error={errors.name?.message}/>
+                        <Button style={{alignSelf: "flex-end"}} onPress={handleSubmit(handleSave)}>Save</Button>
+                    </View>
+                </Modal>
+            </Portal>
+        </ViewContent>
     )
 }
 
 
 const styles = StyleSheet.create({
-    outerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    viewContainer: {
-        flex: 1,
-        width: '80%',
-        marginTop: 16,
-        gap: 16
-    },
     addTeamButton: {
         alignSelf: "flex-end"
     },
