@@ -1,24 +1,17 @@
 import {useOrganizationStore} from "@/stores/organizationStore";
 import {useCallback, useState} from "react";
 import {LeagueList} from "@/components/League/LeagueList";
-import {StyleSheet, View} from "react-native";
-import {Button} from "react-native-paper";
-import {router, useFocusEffect, useRouter} from "expo-router";
+import {Button, Portal} from "react-native-paper";
+import {useFocusEffect, useRouter} from "expo-router";
+import ViewContent from "@/components/Layout/ViewContent";
+import {View} from "react-native";
 import AddLeagueModal from "@/components/League/AddLeagueModal";
-import LeagueMembershipModal from "@/components/League/LeagueMembershipModal";
 
 export default function LeagueOverview() {
     const {organization} = useOrganizationStore();
     const [openAddLeagueModal, setOpenAddLeagueModal] = useState<boolean>(false);
     const [showLeagueMembershipModal, setShowLeagueMembershipModal] = useState(false);
     const [refreshList, setRefreshList] = useState<boolean>(false);
-    const router = useRouter();
-    const handleLeagueMembershipOpenModal = (leagueId: string) => {
-        router.push({
-            pathname: "/dashboard/leagues/[id]",
-            params: { id: leagueId },
-        })
-    }
 
     const handleOpenAddLeagueModal = (): void => {
         setOpenAddLeagueModal(!openAddLeagueModal);
@@ -40,44 +33,18 @@ export default function LeagueOverview() {
     );
 
     return (
-        <View style={[styles.outerContainer]}>
-            <View style={[styles.viewContainer]}>
-                <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenAddLeagueModal}>+ Add League </Button>
-                <LeagueList refresh={refreshList} onPressLeagueDetails={handleLeagueMembershipOpenModal}></LeagueList>
-            </View>
-            <AddLeagueModal open={openAddLeagueModal} onSave={handleSaveLeague}/>
-{/*
-            <LeagueMembershipModal organizationId={organization ? organization : ""} leagueId={selectedLeague} open={showLeagueMembershipModal} onDismiss={() =>  (setShowLeagueMembershipModal(false))}/>
-*/}
+        <View>
+            <ViewContent>
+                <Button
+                    style={[{alignSelf: 'flex-end'}]} mode={'elevated'}
+                    onPress={handleOpenAddLeagueModal}>
+                    + Add League
+                </Button>
+                <LeagueList refresh={refreshList}></LeagueList>
+            </ViewContent>
+            <Portal>
+                <AddLeagueModal open={openAddLeagueModal} onSave={handleSaveLeague}/>
+            </Portal>
         </View>
-
     )
 }
-
-const styles = StyleSheet.create({
-    viewContainer: {
-        flex: 1,
-        width: '80%',
-        marginTop: 16,
-        gap: 16
-    },
-    modal: {
-        flex: 0.8,
-        padding: 16,
-        backgroundColor: "white",
-        width: "80%",
-        maxHeight: 400,
-        maxWidth: 400,
-        zIndex: 200,
-        alignSelf: "center"
-    },
-    formContainer: {
-        flex: 0.7,
-        padding: 16
-    },
-    outerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-})

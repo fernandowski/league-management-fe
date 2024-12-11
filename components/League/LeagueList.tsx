@@ -5,9 +5,9 @@ import {League, useLeagueData} from "@/hooks/useLeagueData";
 import React, {useEffect, useState} from "react";
 import {useOrganizationStore} from "@/stores/organizationStore";
 import Pagination from "@/components/Pagination/Pagination";
+import {Link} from "expo-router";
 
 interface LeagueListProps {
-    onPressLeagueDetails: (id: string) => void
     refresh?: boolean
 }
 
@@ -49,7 +49,7 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
                                     <Text>{league.name}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button mode={'elevated'} onPress={() => (props.onPressLeagueDetails(league.id))}> Details </Button>
+                                    <Link href={`dashboard/leagues/${league.id}`}>Details</Link>
                                 </Card.Actions>
                             </Card>
                         ))

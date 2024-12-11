@@ -7,6 +7,7 @@ import {useEffect} from "react";
 
 export interface Props {
     onChange: (value: string) => void
+    selected?: string
 }
 
 export default function LeagueDropdown(props: Props) {
@@ -15,7 +16,7 @@ export default function LeagueDropdown(props: Props) {
 
     useEffect(() => {
         if (organization !== null) {
-            fetchData({organization_id: organization})
+            fetchData({organization_id: organization, limit: 0, offset: 0, term: ""})
         }
     }, [organization])
 
