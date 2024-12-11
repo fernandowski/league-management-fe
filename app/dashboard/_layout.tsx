@@ -26,7 +26,7 @@ export default function Layout() {
                     }}
                 />
                 <Drawer.Screen
-                    name="leagues/index"
+                    name="leagues/[id]"
                     options={{
                         drawerLabel: 'Leagues',
                         title: 'Leagues'

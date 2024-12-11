@@ -3,20 +3,21 @@ import {useCallback, useState} from "react";
 import {LeagueList} from "@/components/League/LeagueList";
 import {StyleSheet, View} from "react-native";
 import {Button} from "react-native-paper";
-import {useFocusEffect} from "expo-router";
+import {router, useFocusEffect, useRouter} from "expo-router";
 import AddLeagueModal from "@/components/League/AddLeagueModal";
 import LeagueMembershipModal from "@/components/League/LeagueMembershipModal";
 
 export default function LeagueOverview() {
     const {organization} = useOrganizationStore();
-    const [selectedLeague, setSelectedLeague] = useState<null | string>(null);
     const [openAddLeagueModal, setOpenAddLeagueModal] = useState<boolean>(false);
     const [showLeagueMembershipModal, setShowLeagueMembershipModal] = useState(false);
     const [refreshList, setRefreshList] = useState<boolean>(false);
-
+    const router = useRouter();
     const handleLeagueMembershipOpenModal = (leagueId: string) => {
-        setShowLeagueMembershipModal(!showLeagueMembershipModal);
-        setSelectedLeague(leagueId);
+        router.push({
+            pathname: "/dashboard/leagues/[id]",
+            params: { id: leagueId },
+        })
     }
 
     const handleOpenAddLeagueModal = (): void => {
@@ -42,10 +43,12 @@ export default function LeagueOverview() {
         <View style={[styles.outerContainer]}>
             <View style={[styles.viewContainer]}>
                 <Button style={[{alignSelf: 'flex-end'}]} mode={'elevated'} onPress={handleOpenAddLeagueModal}>+ Add League </Button>
-                <LeagueList refresh={refreshList} onPressInviteTeam={handleLeagueMembershipOpenModal}></LeagueList>
+                <LeagueList refresh={refreshList} onPressLeagueDetails={handleLeagueMembershipOpenModal}></LeagueList>
             </View>
             <AddLeagueModal open={openAddLeagueModal} onSave={handleSaveLeague}/>
+{/*
             <LeagueMembershipModal organizationId={organization ? organization : ""} leagueId={selectedLeague} open={showLeagueMembershipModal} onDismiss={() =>  (setShowLeagueMembershipModal(false))}/>
+*/}
         </View>
 
     )

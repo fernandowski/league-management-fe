@@ -7,7 +7,7 @@ import {useOrganizationStore} from "@/stores/organizationStore";
 import Pagination from "@/components/Pagination/Pagination";
 
 interface LeagueListProps {
-    onPressInviteTeam: (id: string) => void
+    onPressLeagueDetails: (id: string) => void
     refresh?: boolean
 }
 
@@ -49,7 +49,7 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
                                     <Text>{league.name}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Button mode={'elevated'} onPress={() => (props.onPressInviteTeam(league.id))}> Invite Team </Button>
+                                    <Button mode={'elevated'} onPress={() => (props.onPressLeagueDetails(league.id))}> Details </Button>
                                 </Card.Actions>
                             </Card>
                         ))
