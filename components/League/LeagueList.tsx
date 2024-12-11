@@ -1,4 +1,4 @@
-import {Animated, View} from "react-native";
+import {Animated, View, StyleSheet} from "react-native";
 import ScrollView = Animated.ScrollView;
 import {Button, Card, Text} from "react-native-paper";
 import {League, useLeagueData} from "@/hooks/useLeagueData";
@@ -49,7 +49,7 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
                                     <Text>{league.name}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Link href={`dashboard/leagues/${league.id}`}>Details</Link>
+                                    <Link style={styles.link} href={`dashboard/leagues/${league.id}`}><Text style={styles.linkText}>Details</Text></Link>
                                 </Card.Actions>
                             </Card>
                         ))
@@ -58,3 +58,18 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    link: {
+        borderRadius: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: 'rgba(0, 0, 0, 0.00)',
+        borderColor: "#0056b3"
+    },
+    linkText: {
+        fontSize: 14,
+        color: 'rgb(103, 80, 164)'
+    }
+});
