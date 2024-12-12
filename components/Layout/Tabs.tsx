@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import {TouchableOpacity, View, StyleSheet} from "react-native";
+import {TouchableOpacity, View, StyleSheet, useWindowDimensions} from "react-native";
 import {Text} from "react-native-paper";
 
-const tabs = ["Standings", "Schedule", "Playoffs", "Ratings & Levels"];
 type tab = {
     key: string,
     title: string,
@@ -14,11 +13,12 @@ interface TabsProps {
 }
 
 const Tabs = (props: TabsProps): React.ReactNode => {
+    const dimensions = useWindowDimensions();
+    const isLargeScreen = dimensions.width >= 768;
     const [activeTab, setActiveTab] = useState(0); // Default to the second tab (Schedule)
     return (
         <View style={styles.container}>
-            {/* Tab Headers */}
-            <View style={styles.tabContainer}>
+            <View style={isLargeScreen ? styles.tabContainer : {...styles.tabContainer, flexDirection: "column"}}>
                 {props.tabs.map(({key,title, view}, index) => (
                     <TouchableOpacity
                         key={index}
@@ -37,10 +37,7 @@ const Tabs = (props: TabsProps): React.ReactNode => {
                 ))}
             </View>
 
-            {/* Tab Content */}
-            <View style={styles.content}>
-                {props.tabs[activeTab].view}`
-            </View>
+            {props.tabs[activeTab].view}
         </View>
     )
 }
@@ -62,10 +59,10 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         alignItems: "center",
         borderBottomWidth: 2,
-        borderBottomColor: "transparent", // Default inactive tab underline
+        borderBottomColor: "transparent",
     },
     activeTab: {
-        borderBottomColor: "blue", // Blue underline for active tab
+        borderBottomColor: "#0056b3",
     },
     tabText: {
         color: "#555",

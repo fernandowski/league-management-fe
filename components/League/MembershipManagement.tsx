@@ -34,7 +34,7 @@ export default function MembershipManagement(props: MembershipManagementProps) {
     }
     useEffect(() => {
         fetchMembership();
-    }, []);
+    }, [props.leagueId]);
     return (
         <View style={{flex: 1}}>
             <View style={{marginTop: 8}}>
