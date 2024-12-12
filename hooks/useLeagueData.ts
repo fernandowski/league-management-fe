@@ -11,13 +11,15 @@ export interface LeagueSearchParams {
 export interface League {
     id: string
     name: string
-    teamIds: string[]
+    teamIds: string[],
+    totalMembers: number
 }
 
 
 export interface LeagueAPIResponse {
     id: string
     name: string
+    total_members: number
 }
 export interface LeagueResponse {
     data: LeagueAPIResponse[]
@@ -51,7 +53,8 @@ export function useLeagueData(): {
             const leagues: League[] = response.data.map((league: LeagueAPIResponse) => ({
                 id: league.id,
                 name: league.name,
-                teamIds: []
+                teamIds: [],
+                totalMembers: league.total_members
             }))
 
             setData(leagues)

@@ -43,10 +43,11 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
             <Pagination currentPage={page} totalItems={total} itemsPerPage={itemsPerPage} onPageChange={setPage}/>
                 <ScrollView>
                     {
-                        data.map((league) => (
+                        data.map((league: League) => (
                             <Card style={{marginBottom: 8, marginLeft: 1, marginRight: 1}} key={league.id}>
                                 <Card.Content>
-                                    <Text>{league.name}</Text>
+                                    <Text style={styles.title}>{league.name}</Text>
+                                    <Text style={styles.label}>Total Members: {league.totalMembers}</Text>
                                 </Card.Content>
                                 <Card.Actions>
                                     <Link style={styles.link} href={`dashboard/leagues/${league.id}`}><Text style={styles.linkText}>Details</Text></Link>
@@ -71,5 +72,14 @@ const styles = StyleSheet.create({
     linkText: {
         fontSize: 14,
         color: 'rgb(103, 80, 164)'
-    }
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 8,
+    },
+    label: {
+        fontSize: 14,
+        color: "#555",
+    },
 });
