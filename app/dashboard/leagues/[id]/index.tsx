@@ -6,6 +6,7 @@ import ViewContent from "@/components/Layout/ViewContent";
 import Tabs from "@/components/Layout/Tabs";
 import {useEffect, useState} from "react";
 import {MembershipView} from "@/components/Membership/MembershipView";
+import LeagueDetails from "@/components/League/LeagueDetails";
 
 export default function Index() {
     const router = useRouter();
@@ -34,6 +35,9 @@ export default function Index() {
         <ViewContent>
             <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
                 <LeagueDropdown onChange={onLeagueChange} selected={leagueId}/>
+            </View>
+            <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
+                <LeagueDetails  leagueId={leagueId}/>
             </View>
             <Tabs tabs={[
                 {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId}/>},
