@@ -5,25 +5,29 @@ import {useLocalSearchParams, useRouter} from "expo-router";
 import ViewContent from "@/components/Layout/ViewContent";
 import Tabs from "@/components/Layout/Tabs";
 import {useEffect, useState} from "react";
-import MembershipManagement from "@/components/League/MembershipManagement";
+import {MembershipView} from "@/components/Membership/MembershipView";
 
 export default function Index() {
     const router = useRouter();
 
     const {id} = useLocalSearchParams();
-    let [leagueId, setLeagueId] = useState<string>(id as string);
+    const [leagueId, setLeagueId] = useState<string>(Array.isArray(id) ? id[0] : id || "");
 
 
-    const onLeagueChange = (leagueId: string) => {
-        router.setParams({
-            id: leagueId
-        });
-        setLeagueId(leagueId);
+    const onLeagueChange = (newLeagueId: string) => {
+        if (newLeagueId !== leagueId) {
+            router.setParams({
+                id: leagueId
+            });
+            setLeagueId(leagueId);
+        }
     }
 
     useEffect(() => {
         const selectedId = Array.isArray(id) ? id[0] : id || "";
-        setLeagueId(selectedId);
+        if (selectedId !== leagueId) {
+            setLeagueId(selectedId);
+        }
     }, [id]);
 
     return (
@@ -33,8 +37,8 @@ export default function Index() {
             </View>
             <Tabs tabs={[
                 {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId}/>},
-                {key: 'season', title: 'Seasons', view: <SeasonView leagueId={leagueId}/>},
-                {key: 'teams', title: 'Teams', view: <TeamsView/>},
+                /*{key: 'season', title: 'Seasons', view: <SeasonView leagueId={leagueId}/>},
+                {key: 'teams', title: 'Teams', view: <TeamsView/>},*/
             ]}>
             </Tabs>
         </ViewContent>
@@ -45,14 +49,6 @@ const SeasonView = ({leagueId}: { leagueId: string }) => {
     return (
         <View>
 
-        </View>
-    )
-}
-
-const MembershipView = ({leagueId}: {leagueId: string}) => {
-    return (
-        <View style={{flex: 1}}>
-            <MembershipManagement leagueId={leagueId}/>
         </View>
     )
 }
