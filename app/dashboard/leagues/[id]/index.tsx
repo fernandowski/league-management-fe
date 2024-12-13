@@ -17,9 +17,9 @@ export default function Index() {
     const onLeagueChange = (newLeagueId: string) => {
         if (newLeagueId !== leagueId) {
             router.setParams({
-                id: leagueId
+                id: newLeagueId
             });
-            setLeagueId(leagueId);
+            setLeagueId(newLeagueId);
         }
     }
 
