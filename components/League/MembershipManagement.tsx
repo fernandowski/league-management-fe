@@ -8,6 +8,7 @@ import {apiRequest} from "@/api/api";
 
 export interface MembershipManagementProps {
     leagueId: string | null
+    onFetch?: () => void
 }
 
 export default function MembershipManagement(props: MembershipManagementProps) {
@@ -25,6 +26,7 @@ export default function MembershipManagement(props: MembershipManagementProps) {
                 id: member.membership_id,
             }));
             setLeagueMembers(leagueMembers);
+            props.onFetch && props.onFetch()
         }
     }
 

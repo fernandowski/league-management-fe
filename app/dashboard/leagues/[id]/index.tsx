@@ -5,14 +5,16 @@ import {useLocalSearchParams, useRouter} from "expo-router";
 import ViewContent from "@/components/Layout/ViewContent";
 import Tabs from "@/components/Layout/Tabs";
 import {useEffect, useState} from "react";
-import {MembershipView} from "@/components/Membership/MembershipView";
+import MembershipView from "@/components/Membership/MembershipView";
 import LeagueDetails from "@/components/League/LeagueDetails";
+import SeasonsView from "@/components/Seasons/SeasonsView";
 
 export default function Index() {
     const router = useRouter();
 
     const {id} = useLocalSearchParams();
     const [leagueId, setLeagueId] = useState<string>(Array.isArray(id) ? id[0] : id || "");
+    const [refreshLeagueDetails, setRefreshLeagueDetails] = useState(false);
 
 
     const onLeagueChange = (newLeagueId: string) => {
@@ -22,6 +24,10 @@ export default function Index() {
             });
             setLeagueId(newLeagueId);
         }
+    }
+
+    const onMemberRefresh = () => {
+        setRefreshLeagueDetails(!refreshLeagueDetails);
     }
 
     useEffect(() => {
@@ -37,29 +43,15 @@ export default function Index() {
                 <LeagueDropdown onChange={onLeagueChange} selected={leagueId}/>
             </View>
             <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
-                <LeagueDetails  leagueId={leagueId}/>
+                <LeagueDetails  leagueId={leagueId} refresh={refreshLeagueDetails}/>
             </View>
             <Tabs tabs={[
-                {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId}/>},
-                /*{key: 'season', title: 'Seasons', view: <SeasonView leagueId={leagueId}/>},
-                {key: 'teams', title: 'Teams', view: <TeamsView/>},*/
+                {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId} onMemberRefresh={onMemberRefresh}/>},
+                {key: 'season', title: 'Seasons', view: <SeasonsView leagueId={leagueId}/>},
             ]}>
             </Tabs>
         </ViewContent>
     )
 }
-
-const SeasonView = ({leagueId}: { leagueId: string }) => {
-    return (
-        <View>
-
-        </View>
-    )
-}
-
-const TeamsView = () => {
-    return <View><Text>Teams View</Text></View>
-}
-
 
 const styles = StyleSheet.create({});

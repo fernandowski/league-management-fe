@@ -5,6 +5,7 @@ import {LeagueDetailResponse, useData} from "@/hooks/useData";
 
 interface LeagueDetailsProps {
     leagueId: string
+    refresh: boolean
 }
 export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Element {
     console.log(props.leagueId)
@@ -12,12 +13,10 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
 
     useEffect(() => {
         const fetch = async () => {
-            console.log("calling");
             fetchData(`/v1/leagues/${props.leagueId}`);
         }
-        console.log('use efect');
         fetch();
-    }, [props.leagueId]);
+    }, [props.leagueId, props.refresh]);
 
     if (!data) {
         return <></>
