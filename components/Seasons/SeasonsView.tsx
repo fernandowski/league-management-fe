@@ -9,29 +9,13 @@ interface SeasonsViewProps {
 }
 
 const SeasonsView = (props: SeasonsViewProps) => {
-    const [openModal, setOpenModal] = useState<boolean>(false);
     const [refresh, setRefresh] = useState(false);
-
-    const openSeasonModal = () => {
-        setOpenModal(!openModal);
-    }
-
-    const handleSave = () => {
-        setOpenModal(false);
-        setRefresh(!refresh);
-    };
 
     return (
         <View>
             <View style={styles.container}>
-                <View style={styles.button}><Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button></View>
-                <View>
-                    <SeasonsTable leagueId={props.leagueId} refresh={refresh}></SeasonsTable>
-                </View>
+                <SeasonsTable leagueId={props.leagueId} refresh={refresh}></SeasonsTable>
             </View>
-            <Portal>
-                <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
-            </Portal>
         </View>
     )
 }

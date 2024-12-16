@@ -45,7 +45,7 @@ export default function AddSeasonModal(props: AddSeasonModalProps) {
     }
 
     return (
-        <Modal visible={props.open} dismissable={true} contentContainerStyle={[styles.modal]}>
+        <Modal visible={props.open} dismissable={false} contentContainerStyle={[styles.modal]}>
             <View style={[styles.formContainer]}>
                 <View style={{gap: 16}}>
                     <Text>Season Name: </Text>

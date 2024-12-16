@@ -1,13 +1,17 @@
 import {View, StyleSheet} from "react-native";
-import React, {useEffect} from "react";
-import {Card, Text} from "react-native-paper";
+import React, {useEffect, useState} from "react";
 import {LeagueDetailResponse, useData} from "@/hooks/useData";
+import LeagueDetailsCard from "@/components/League/LeagueDetailsCard";
+import AddSeasonModal from "@/components/Seasons/AddSeasonModal";
+import {Button, Portal} from "react-native-paper";
 
 interface LeagueDetailsProps {
     leagueId: string
     refresh: boolean
 }
 export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Element {
+    const [openModal, setOpenModal] = useState<boolean>(false);
+
     const {fetchData, data} = useData<LeagueDetailResponse>();
 
     useEffect(() => {
@@ -17,31 +21,25 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
         fetch();
     }, [props.leagueId, props.refresh]);
 
+    const handleSave = () => {
+        setOpenModal(false);
+    };
+
+    const openSeasonModal = () => {
+        setOpenModal(!openModal);
+    }
+
     if (!data) {
         return <></>
     }
 
     return (
-        <View>
-            <Card>
-                <Card.Title title={"League Info"}></Card.Title>
-                <Card.Content>
-                    <View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>League ID: </Text>
-                            <Text style={styles.value}>{data.id}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Name: </Text>
-                            <Text style={styles.value}>{data.name}</Text>
-                        </View>
-                        <View style={styles.row}>
-                            <Text style={styles.label}>Active Members: </Text>
-                            <Text style={styles.value}>{data.active_members}</Text>
-                        </View>
-                    </View>
-                </Card.Content>
-            </Card>
+        <View style={[styles.container]}>
+            <LeagueDetailsCard data={data}/>
+            {!data.season && <View style={styles.button}><Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button></View>}
+            <Portal>
+                <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
+            </Portal>
         </View>
     )
 }
@@ -49,24 +47,9 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        backgroundColor: "#f8f4ff",
-        borderRadius: 8,
-        margin: 16,
-        elevation: 3, // Adds shadow for Android
-        shadowColor: "#000", // Adds shadow for iOS
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
+        flexDirection: "row"
     },
-    row: {
-        marginBottom: 8,
-        alignItems: "flex-start",
+    button: {
+        alignItems: "flex-end"
     },
-    label: {
-        fontWeight: "bold"
-    },
-    value: {
-
-    }
 });

@@ -47,7 +47,7 @@ export default function Index() {
             </View>
             <Tabs tabs={[
                 {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId} onMemberRefresh={onMemberRefresh}/>},
-                {key: 'season', title: 'Seasons', view: <SeasonsView leagueId={leagueId}/>},
+                {key: 'season', title: 'Season', view: <SeasonsView leagueId={leagueId}/>},
             ]}>
             </Tabs>
         </ViewContent>
