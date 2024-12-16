@@ -30,7 +30,7 @@ const SeasonsView = (props: SeasonsViewProps) => {
                 </View>
             </View>
             <Portal>
-                <AddSeasonModal onSave={handleSave} open={openModal} leagueId={props.leagueId}/>
+                <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
             </Portal>
         </View>
     )

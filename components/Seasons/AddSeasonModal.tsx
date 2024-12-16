@@ -6,11 +6,13 @@ import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import Joi from "joi";
 import {apiRequest} from "@/api/api";
+import {useEffect} from "react";
 
 export interface AddSeasonModalProps {
     onSave: () => void
     open: boolean
     leagueId: string
+    onClose: () => void
 }
 
 const schema = Joi.object({
@@ -25,7 +27,7 @@ interface CreateSeasonData {
     name: string
 }
 export default function AddSeasonModal(props: AddSeasonModalProps) {
-    const {control, handleSubmit, formState: {errors}} = useForm<CreateSeasonData>(
+    const {reset, control, handleSubmit, formState: {errors}} = useForm<CreateSeasonData>(
         {
             resolver: joiResolver(schema),
         }
@@ -33,15 +35,26 @@ export default function AddSeasonModal(props: AddSeasonModalProps) {
 
     const handleSave = async (data: CreateSeasonData) => {
         await apiRequest(`/v1/leagues/${props.leagueId}/seasons`, {method: "POST", body: {name: data.name}});
+        reset();
         props.onSave();
     };
+
+    const onClose = () => {
+        reset();
+        props.onClose();
+    }
 
     return (
         <Modal visible={props.open} dismissable={true} contentContainerStyle={[styles.modal]}>
             <View style={[styles.formContainer]}>
-                <Text>Season Name</Text>
-                <ControlledTextInput label='Name' name={'name'} control={control} error={errors.name?.message}/>
-                <Button style={{alignSelf: "flex-end"}} onPress={handleSubmit(handleSave)}>Save</Button>
+                <View style={{gap: 16}}>
+                    <Text>Season Name: </Text>
+                    <ControlledTextInput  name={'name'} control={control} error={errors.name?.message}/>
+                </View>
+                <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
+                    <Button onPress={onClose}>Cancel</Button>
+                    <Button onPress={handleSubmit(handleSave)}>Save</Button>
+                </View>
             </View>
         </Modal>
     )
@@ -59,7 +72,8 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
     formContainer: {
-        flex: 0.7,
-        padding: 16
+        flex: 1,
+        padding: 16,
+        justifyContent: "space-between"
     },
 })
