@@ -8,7 +8,6 @@ interface LeagueDetailsProps {
     refresh: boolean
 }
 export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Element {
-    console.log(props.leagueId)
     const {fetchData, data} = useData<LeagueDetailResponse>();
 
     useEffect(() => {

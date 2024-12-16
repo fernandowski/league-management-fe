@@ -19,6 +19,7 @@ export default function LeagueMembers(props: LeagueMembersProps) {
             <Card style={[styles.card]}>
                 <Card.Title title={"League Members"}/>
                 <Card.Content>
+                    <View>
                         {
                             props.members.map((member: LeagueMember) => {
                                 return (
@@ -32,6 +33,7 @@ export default function LeagueMembers(props: LeagueMembersProps) {
                                 )
                             })
                         }
+                    </View>
                 </Card.Content>
             </Card>
         </View>
@@ -56,6 +58,5 @@ const styles = StyleSheet.create({
         marginTop: 16
     },
     card: {
-        height: '100%'
     }
 });

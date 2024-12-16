@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, View} from "react-native";
 
 interface ViewContentProps {
     children: React.ReactNode
@@ -8,9 +8,9 @@ interface ViewContentProps {
 const ViewContent = (props: ViewContentProps) => {
     return (
         <View style={styles.outerContainer}>
-            <View style={styles.viewContainer}>
+            <ScrollView style={styles.viewContainer} showsVerticalScrollIndicator={false}>
                 {props.children}
-            </View>
+            </ScrollView>
         </View>
     )
 }

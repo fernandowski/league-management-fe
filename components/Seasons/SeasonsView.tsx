@@ -24,8 +24,7 @@ const SeasonsView = (props: SeasonsViewProps) => {
     return (
         <View>
             <View style={styles.container}>
-
-                <View style={styles.button}><Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button> </View>
+                <View style={styles.button}><Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button></View>
                 <View>
                     <SeasonsTable leagueId={props.leagueId} refresh={refresh}></SeasonsTable>
                 </View>
