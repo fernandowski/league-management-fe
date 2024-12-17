@@ -44,7 +44,10 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
     return (
         <View>
             <View style={ isLargeScreen ? styles.container : styles.smallScreen}>
-                <LeagueDetailsCard data={data}/>
+                <View style={isLargeScreen ? {} : styles.fullWidthCard}>
+                    <LeagueDetailsCard data={data}/>
+
+                </View>
                 {!data.season ?
                     (
                         <View style={styles.addSeasonContainer}>
@@ -53,7 +56,9 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
                     )
                     :
                     (
-                        <SeasonDetailsCard data={data}/>
+                        <View style={isLargeScreen ? {} : styles.fullWidthCard}>
+                            <SeasonDetailsCard data={data}/>
+                        </View>
                     )
                 }
             </View>
@@ -81,5 +86,8 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "center",
         gap: 12
-    }
+    },
+    fullWidthCard: {
+        width: "99%",
+    },
 });
