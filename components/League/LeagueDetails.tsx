@@ -19,14 +19,17 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
 
     const {fetchData, data} = useData<LeagueDetailResponse>();
 
+    const fetch = async () => {
+        fetchData(`/v1/leagues/${props.leagueId}`);
+    }
+
     useEffect(() => {
-        const fetch = async () => {
-            fetchData(`/v1/leagues/${props.leagueId}`);
-        }
+
         fetch();
     }, [props.leagueId, props.refresh]);
 
     const handleSave = () => {
+        fetch();
         setOpenModal(false);
     };
 
@@ -45,12 +48,16 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
                 (
                     <View style={styles.addSeasonContainer}>
                         <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
-                    </View>)
+                    </View>
+                )
                 :
                 (
                     <SeasonDetailsCard data={data}/>
                 )
             }
+            <Portal>
+                <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
+            </Portal>
         </View>
     )
 }
@@ -60,7 +67,8 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "row"
+        flexDirection: "row",
+        gap: 18
     },
     addSeasonContainer: {
         flex: 1
@@ -70,6 +78,6 @@ const styles = StyleSheet.create({
     },
     smallScreen: {
         flexDirection: "column",
-        gap: 18
+        gap: 12
     }
 });
