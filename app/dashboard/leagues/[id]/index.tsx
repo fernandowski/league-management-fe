@@ -42,9 +42,7 @@ export default function Index() {
             <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
                 <LeagueDropdown onChange={onLeagueChange} selected={leagueId}/>
             </View>
-            <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
-                <LeagueDetails  leagueId={leagueId} refresh={refreshLeagueDetails}/>
-            </View>
+            <LeagueDetails  leagueId={leagueId} refresh={refreshLeagueDetails}/>
             <Tabs tabs={[
                 {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId} onMemberRefresh={onMemberRefresh}/>},
                 {key: 'season', title: 'Season', view: <SeasonsView leagueId={leagueId}/>},

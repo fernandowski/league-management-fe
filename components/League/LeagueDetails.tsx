@@ -42,19 +42,21 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
     }
 
     return (
-        <View style={isLargeScreen ? styles.container : styles.smallScreen}>
-            <LeagueDetailsCard data={data}/>
-            {!data.season ?
-                (
-                    <View style={styles.addSeasonContainer}>
-                        <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
-                    </View>
-                )
-                :
-                (
-                    <SeasonDetailsCard data={data}/>
-                )
-            }
+        <View>
+            <View style={ isLargeScreen ? styles.container : styles.smallScreen}>
+                <LeagueDetailsCard data={data}/>
+                {!data.season ?
+                    (
+                        <View style={styles.addSeasonContainer}>
+                            <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
+                        </View>
+                    )
+                    :
+                    (
+                        <SeasonDetailsCard data={data}/>
+                    )
+                }
+            </View>
             <Portal>
                 <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
             </Portal>
@@ -71,13 +73,13 @@ const styles = StyleSheet.create({
         gap: 18
     },
     addSeasonContainer: {
-        flex: 1
     },
     button: {
         alignItems: "flex-end"
     },
     smallScreen: {
         flexDirection: "column",
+        alignItems: "center",
         gap: 12
     }
 });
