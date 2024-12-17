@@ -4,7 +4,7 @@ import React from "react";
 import {LeagueDetailResponse} from "@/hooks/useData";
 
 
-interface LeagueDetailsCardProps {
+export interface LeagueDetailsCardProps {
     data: LeagueDetailResponse
 }
 const LeagueDetailsCard = (props: LeagueDetailsCardProps) => {
