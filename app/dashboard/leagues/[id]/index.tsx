@@ -43,11 +43,6 @@ export default function Index() {
                 <LeagueDropdown onChange={onLeagueChange} selected={leagueId}/>
             </View>
             <LeagueDetails  leagueId={leagueId} refresh={refreshLeagueDetails}/>
-            <Tabs tabs={[
-                {key: 'membership', title: 'Membership', view: <MembershipView leagueId={leagueId} onMemberRefresh={onMemberRefresh}/>},
-                {key: 'season', title: 'Season', view: <SeasonsView leagueId={leagueId}/>},
-            ]}>
-            </Tabs>
         </ViewContent>
     )
 }

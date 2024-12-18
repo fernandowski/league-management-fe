@@ -1,21 +1,22 @@
 import {StyleSheet, View} from "react-native";
-import {Button, Portal} from "react-native-paper";
-import {useState} from "react";
-import AddSeasonModal from "@/components/Seasons/AddSeasonModal";
-import SeasonsTable from "@/components/Seasons/SeasonsTable";
+import {Card, Text} from "react-native-paper";
+import {useEffect, useState} from "react";
 
 interface SeasonsViewProps {
-    leagueId: string
+    seasonId: string
 }
 
 const SeasonsView = (props: SeasonsViewProps) => {
-    const [refresh, setRefresh] = useState(false);
 
+    useEffect(() => {
+
+    }, [props.seasonId]);
     return (
         <View>
-            <View style={styles.container}>
-                <SeasonsTable leagueId={props.leagueId} refresh={refresh}></SeasonsTable>
-            </View>
+            <Card>
+                <Card.Title title={"Season Name"}>
+                </Card.Title>
+            </Card>
         </View>
     )
 }

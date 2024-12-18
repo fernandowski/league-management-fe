@@ -5,6 +5,9 @@ import LeagueDetailsCard from "@/components/League/LeagueDetailsCard";
 import AddSeasonModal from "@/components/Seasons/AddSeasonModal";
 import {Button, Portal} from "react-native-paper";
 import SeasonDetailsCard from "@/components/League/SeasonDetailsCard";
+import MembershipView from "@/components/Membership/MembershipView";
+import SeasonsView from "@/components/Seasons/SeasonsView";
+import Tabs from "@/components/Layout/Tabs";
 
 interface LeagueDetailsProps {
     leagueId: string
@@ -23,8 +26,11 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
         fetchData(`/v1/leagues/${props.leagueId}`);
     }
 
-    useEffect(() => {
+    const onMemberRefresh = () => {
+        fetch();
+    }
 
+    useEffect(() => {
         fetch();
     }, [props.leagueId, props.refresh]);
 
@@ -44,7 +50,7 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
     return (
         <View>
             <View style={ isLargeScreen ? styles.container : styles.smallScreen}>
-                <View style={isLargeScreen ? {} : styles.fullWidthCard}>
+                <View style={isLargeScreen ? {flex: 0.5} : styles.fullWidthCard}>
                     <LeagueDetailsCard data={data}/>
 
                 </View>
@@ -56,11 +62,18 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
                     )
                     :
                     (
-                        <View style={isLargeScreen ? {} : styles.fullWidthCard}>
+                        <View style={isLargeScreen ? {flex: 0.5} : styles.fullWidthCard}>
                             <SeasonDetailsCard data={data}/>
                         </View>
                     )
                 }
+            </View>
+            <View>
+                <Tabs tabs={[
+                    {key: 'membership', title: 'Membership', view: <MembershipView leagueId={props.leagueId} onMemberRefresh={onMemberRefresh}/>},
+                    {key: 'season', title: 'Season', view: <SeasonsView seasonId={data.season?.id}/>},
+                ]}>
+                </Tabs>
             </View>
             <Portal>
                 <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
