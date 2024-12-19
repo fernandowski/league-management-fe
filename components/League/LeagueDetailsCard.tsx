@@ -2,6 +2,7 @@ import {Card, Text} from "react-native-paper";
 import {View, StyleSheet} from "react-native";
 import React from "react";
 import {LeagueDetailResponse} from "@/hooks/useData";
+import SeasonDetailsCard from "@/components/League/SeasonDetailsCard";
 
 
 export interface LeagueDetailsCardProps {
@@ -10,20 +11,48 @@ export interface LeagueDetailsCardProps {
 const LeagueDetailsCard = (props: LeagueDetailsCardProps) => {
     return (
         <Card>
-            <Card.Title title={"League Info"}></Card.Title>
+            <Card.Title title={"League Info"} titleStyle={{fontWeight: "bold"}}></Card.Title>
             <Card.Content>
-                <View>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>League ID: </Text>
-                        <Text style={styles.value}>{props.data.id}</Text>
+                <View style={{flexDirection: "row",  flexWrap: "wrap", gap: 18}}>
+                    <View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>League ID: </Text>
+                            <Text>{props.data.id}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Name: </Text>
+                            <Text>{props.data.name}</Text>
+                        </View>
+                        <View style={styles.row}>
+                            <Text style={styles.label}>Active Members: </Text>
+                            <Text>{props.data.active_members}</Text>
+                        </View>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Name: </Text>
-                        <Text style={styles.value}>{props.data.name}</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Active Members: </Text>
-                        <Text style={styles.value}>{props.data.active_members}</Text>
+                    <View>
+                        {
+                            props.data.season ?
+                                (
+                                    <>
+                                    <View style={styles.row}>
+                                        <Text style={styles.label}>Season ID: </Text>
+                                        <Text>{props.data.season.id}</Text>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <Text style={styles.label}>Name: </Text>
+                                        <Text>{props.data.season.name}</Text>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <Text style={styles.label}>Status: </Text>
+                                        <Text>{props.data.season.status}</Text>
+                                    </View>
+                                    </>
+                                )
+                                    :
+                                    (
+                                        <Text style={{color: "red"}}> No Season has been configured. Got to Seasons section to configure one. </Text>
+                                    )
+                        }
+
                     </View>
                 </View>
             </Card.Content>
@@ -39,9 +68,6 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
     },
     label: {
-        fontWeight: "bold"
-    },
-    value: {
-
+        fontWeight: "bold",
     }
 })

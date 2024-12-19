@@ -54,19 +54,10 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
                     <LeagueDetailsCard data={data}/>
 
                 </View>
-                {!data.season ?
-                    (
-                        <View style={styles.addSeasonContainer}>
+
+                        {/*<View style={styles.addSeasonContainer}>
                             <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
-                        </View>
-                    )
-                    :
-                    (
-                        <View style={isLargeScreen ? {flex: 0.5} : styles.fullWidthCard}>
-                            <SeasonDetailsCard data={data}/>
-                        </View>
-                    )
-                }
+                        </View>*/}
             </View>
             <View>
                 <Tabs tabs={[
