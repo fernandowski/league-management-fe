@@ -2,7 +2,7 @@ import {SeasonDetailResponse} from "@/hooks/useData";
 import {View,StyleSheet} from "react-native";
 import MatchesPagination from "@/components/Seasons/MatchesPagination";
 import MatchUpList from "@/components/Seasons/MatchUpList";
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {Surface, Text} from "react-native-paper";
 
 export interface MatchesProps {
@@ -24,6 +24,12 @@ export default function Matches (props: MatchesProps) {
         }
     }
 
+    const sortedRounds = useMemo(() => {
+        return [...props.season.rounds].sort(
+            (a, b) => Number(a.round_number) - Number(b.round_number)
+        );
+    }, [props.season.rounds]);
+
     return (
         <Surface>
             <View style={styles.paginationContainer}>
@@ -31,7 +37,7 @@ export default function Matches (props: MatchesProps) {
                 <MatchesPagination onNext={handleHandleNextRound} onPrevious={handlePreviousRound} currentRound={props.season.rounds[roundNumber].round_number}/>
             </View>
             <View>
-                <MatchUpList round={props.season.rounds.sort((a,b) => (Number(b.round_number)-Number(a.round_number)))[roundNumber]}/>
+                <MatchUpList round={sortedRounds[roundNumber]}/>
             </View>
         </Surface>
     )
