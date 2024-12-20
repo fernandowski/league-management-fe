@@ -1,7 +1,8 @@
-import {Card} from "react-native-paper";
-import {View} from "react-native";
+import {Card, Divider, Surface, Text} from "react-native-paper";
+import {View, StyleSheet} from "react-native";
 import React, {useEffect} from "react";
 import {SeasonDetailResponse, useData} from "@/hooks/useData";
+import SeasonInformation from "@/components/Seasons/SeasonInformation";
 
 
 export interface SeasonDetailsProps {
@@ -18,11 +19,29 @@ export default function SeasonDetail(props: SeasonDetailsProps) {
     useEffect(() => {
         fetchRoundDetails()
     }, [props.seasonId, props.leagueId]);
+
+    if (!seasonDetails) {
+        return (
+            <View>
+                <Card>
+                    <Card.Title title="Loading..." />
+                </Card>
+            </View>
+        );
+    }
+
     return (
         <View>
-            <Card>
-                <Card.Title title={seasonDetails?.name ? seasonDetails.name : "Season Details"}/>
-            </Card>
+            <Surface style={{ padding: 18}}>
+                <SeasonInformation season={seasonDetails}/>
+                <Divider/>
+            </Surface>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+
+});
+
+

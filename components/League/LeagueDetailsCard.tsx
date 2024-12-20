@@ -33,18 +33,18 @@ const LeagueDetailsCard = (props: LeagueDetailsCardProps) => {
                             props.data.season ?
                                 (
                                     <View>
-                                    <View style={styles.row}>
-                                        <Text style={styles.label}>Season ID: </Text>
-                                        <Text>{props.data.season.id}</Text>
-                                    </View>
-                                    <View style={styles.row}>
-                                        <Text style={styles.label}>Name: </Text>
-                                        <Text>{props.data.season.name}</Text>
-                                    </View>
-                                    <View style={styles.row}>
-                                        <Text style={styles.label}>Status: </Text>
-                                        <Text>{props.data.season.status}</Text>
-                                    </View>
+                                        <View style={styles.row}>
+                                            <Text style={styles.label}>Season ID: </Text>
+                                            <Text>{props.data.season.id}</Text>
+                                        </View>
+                                        <View style={styles.row}>
+                                            <Text style={styles.label}>Name: </Text>
+                                            <Text>{props.data.season.name}</Text>
+                                        </View>
+                                        <View style={styles.row}>
+                                            <Text style={styles.label}>Status: </Text>
+                                            <Text>{props.data.season.status}</Text>
+                                        </View>
                                     </View>
                                 )
                                     :
