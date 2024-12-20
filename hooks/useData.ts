@@ -20,6 +20,25 @@ export interface LeagueDetailResponse {
     season: Record<string, any>
     active_members: number
 }
+
+
+export interface Match {
+    home_team: string,
+    away_team: string,
+    id: string
+}
+
+export interface Round {
+    round_number: string
+    matches: Match[]
+}
+export interface SeasonDetailResponse {
+    id: string,
+    name: string
+    status: string
+    rounds: Round[]
+}
+
 export function useData<TResponse>() {
     const [fetching, setFetching] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);

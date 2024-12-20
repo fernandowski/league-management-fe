@@ -2,11 +2,8 @@ import {View, StyleSheet, useWindowDimensions} from "react-native";
 import React, {useEffect, useState} from "react";
 import {LeagueDetailResponse, useData} from "@/hooks/useData";
 import LeagueDetailsCard from "@/components/League/LeagueDetailsCard";
-import AddSeasonModal from "@/components/Seasons/AddSeasonModal";
-import {Button, Portal} from "react-native-paper";
-import SeasonDetailsCard from "@/components/League/SeasonDetailsCard";
 import MembershipView from "@/components/Membership/MembershipView";
-import SeasonsView from "@/components/Seasons/SeasonsView";
+import SeasonTabView from "@/components/Seasons/SeasonTabView";
 import Tabs from "@/components/Layout/Tabs";
 
 interface LeagueDetailsProps {
@@ -18,7 +15,6 @@ interface LeagueDetailsProps {
 export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Element {
     const dimensions = useWindowDimensions();
     const isLargeScreen = dimensions.width >= 768;
-    const [openModal, setOpenModal] = useState<boolean>(false);
 
     const {fetchData, data} = useData<LeagueDetailResponse>();
 
@@ -30,45 +26,32 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
         fetch();
     }
 
+    const onSeasonAdded = () => {
+        fetch();
+    }
+
     useEffect(() => {
         fetch();
     }, [props.leagueId, props.refresh]);
-
-    const handleSave = () => {
-        fetch();
-        setOpenModal(false);
-    };
-
-    const openSeasonModal = () => {
-        setOpenModal(!openModal);
-    }
 
     if (!data) {
         return <></>
     }
 
     return (
-        <View>
-            <View style={ isLargeScreen ? styles.container : styles.smallScreen}>
+        <View style={styles.container}>
+            <View style={ isLargeScreen ? styles.rowContainer : styles.columnContainer}>
                 <View style={isLargeScreen ? {flex: 0.5} : styles.fullWidthCard}>
                     <LeagueDetailsCard data={data}/>
-
                 </View>
-
-                        {/*<View style={styles.addSeasonContainer}>
-                            <Button mode={'elevated'} onPress={openSeasonModal}>+ Add Season</Button>
-                        </View>*/}
             </View>
-            <View>
+            <View style={styles.tabsContainer}>
                 <Tabs tabs={[
                     {key: 'membership', title: 'Membership', view: <MembershipView leagueId={props.leagueId} onMemberRefresh={onMemberRefresh}/>},
-                    {key: 'season', title: 'Season', view: <SeasonsView seasonId={data.season?.id}/>},
+                    {key: 'season', title: 'Season', view: <SeasonTabView league={data} onSeasonAdded={onSeasonAdded}/>},
                 ]}>
                 </Tabs>
             </View>
-            <Portal>
-                <AddSeasonModal onSave={handleSave} onClose={openSeasonModal} open={openModal} leagueId={props.leagueId}/>
-            </Portal>
         </View>
     )
 }
@@ -78,20 +61,25 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+    },
+    rowContainer: {
         flexDirection: "row",
-        gap: 18
+        gap: 18,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
     },
-    addSeasonContainer: {
-    },
-    button: {
-        alignItems: "flex-end"
-    },
-    smallScreen: {
+    columnContainer: {
         flexDirection: "column",
         alignItems: "center",
-        gap: 12
+        gap: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
     },
     fullWidthCard: {
-        width: "99%",
+        width: "100%",
+    },
+    tabsContainer: {
+        flex: 1
     },
 });

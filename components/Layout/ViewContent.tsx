@@ -8,9 +8,15 @@ interface ViewContentProps {
 const ViewContent = (props: ViewContentProps) => {
     return (
         <View style={styles.outerContainer}>
-            <ScrollView style={styles.viewContainer} showsVerticalScrollIndicator={false}>
-                {props.children}
-            </ScrollView>
+            <View style={styles.scrollContainer}>
+                <ScrollView
+                    style={styles.viewContainer}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.scrollContent}
+                >
+                    {props.children}
+                </ScrollView>
+            </View>
         </View>
     )
 }
@@ -18,14 +24,24 @@ const ViewContent = (props: ViewContentProps) => {
 const styles = StyleSheet.create({
     outerContainer: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     viewContainer: {
-        flex: 1,
+        flexGrow: 1,
         width: '80%',
+        maxWidth: '80%',
         marginTop: 16,
-        gap: 16
+        gap: 16,
+        paddingHorizontal: 8,
+    },
+    scrollContainer: {
+        flex: 1,
+        width: "100%",
+        alignItems: "center"
+    },
+    scrollContent: {
+        flexGrow: 1,
+        paddingHorizontal: 8,
     },
 })
 

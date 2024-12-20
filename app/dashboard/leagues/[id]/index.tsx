@@ -1,13 +1,9 @@
-import {Text} from "react-native-paper";
 import {StyleSheet, View} from "react-native";
 import LeagueDropdown from "@/components/League/LeagueDropdown";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import ViewContent from "@/components/Layout/ViewContent";
-import Tabs from "@/components/Layout/Tabs";
 import {useEffect, useState} from "react";
-import MembershipView from "@/components/Membership/MembershipView";
 import LeagueDetails from "@/components/League/LeagueDetails";
-import SeasonsView from "@/components/Seasons/SeasonsView";
 
 export default function Index() {
     const router = useRouter();
@@ -39,12 +35,27 @@ export default function Index() {
 
     return (
         <ViewContent>
-            <View style={{flexDirection: 'row', paddingHorizontal: 16}}>
-                <LeagueDropdown onChange={onLeagueChange} selected={leagueId}/>
+            <View style={{ flex: 1}}>
+                <View>
+                    <View style={styles.dropdownContainer}>
+                        <LeagueDropdown onChange={onLeagueChange} selected={leagueId}/>
+                    </View>
+                </View>
+                <View style={styles.detailsContainer}>
+                    <LeagueDetails  leagueId={leagueId} refresh={refreshLeagueDetails}/>
+                </View>
             </View>
-            <LeagueDetails  leagueId={leagueId} refresh={refreshLeagueDetails}/>
         </ViewContent>
     )
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    dropdownContainer: {
+        flexDirection: "row",
+        paddingHorizontal: 16,
+        marginBottom: 16,
+    },
+    detailsContainer: {
+        flex: 1,
+    },
+});

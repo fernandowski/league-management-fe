@@ -28,11 +28,11 @@ const LeagueDetailsCard = (props: LeagueDetailsCardProps) => {
                             <Text>{props.data.active_members}</Text>
                         </View>
                     </View>
-                    <View>
+                    <View style={{width: "100%"}}>
                         {
                             props.data.season ?
                                 (
-                                    <>
+                                    <View>
                                     <View style={styles.row}>
                                         <Text style={styles.label}>Season ID: </Text>
                                         <Text>{props.data.season.id}</Text>
@@ -45,11 +45,13 @@ const LeagueDetailsCard = (props: LeagueDetailsCardProps) => {
                                         <Text style={styles.label}>Status: </Text>
                                         <Text>{props.data.season.status}</Text>
                                     </View>
-                                    </>
+                                    </View>
                                 )
                                     :
                                     (
-                                        <Text style={{color: "red"}}> No Season has been configured. Got to Seasons section to configure one. </Text>
+                                        <View>
+                                            <Text style={styles.messageText}> No Season has been configured. Go to Seasons section to configure one. </Text>
+                                        </View>
                                     )
                         }
 
@@ -69,5 +71,8 @@ const styles = StyleSheet.create({
     },
     label: {
         fontWeight: "bold",
+    },
+    messageText: {
+        textAlign: "left"
     }
 })

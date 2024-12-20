@@ -36,8 +36,9 @@ const Tabs = (props: TabsProps): React.ReactNode => {
                     </TouchableOpacity>
                 ))}
             </View>
-
-            {props.tabs[activeTab].view}
+            <View style={styles.content}>
+                {props.tabs[activeTab].view}
+            </View>
         </View>
     )
 }
@@ -73,7 +74,6 @@ const styles = StyleSheet.create({
         color: "black",
     },
     content: {
-        marginTop: 20,
-        alignItems: "center",
+        flex: 1
     },
 });
