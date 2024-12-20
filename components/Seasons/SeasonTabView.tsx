@@ -7,6 +7,7 @@ import AddSeason from "@/components/Seasons/AddSeason";
 interface SeasonsViewProps {
     league: LeagueDetailResponse
     onSeasonAdded: () =>  void
+    onSeasonPlanned: () => void
 }
 
 const SeasonTabView = (props: SeasonsViewProps) => {
@@ -14,7 +15,7 @@ const SeasonTabView = (props: SeasonsViewProps) => {
         <View style={styles.container}>
             {
                 props.league.season ?
-                (<SeasonDetail seasonId={props.league.season.id} leagueId={props.league.id}/>)
+                (<SeasonDetail seasonId={props.league.season.id} leagueId={props.league.id} onSeasonPlanned={props.onSeasonPlanned}/>)
                 :
                 (<AddSeason leagueId={props.league.id} onSeasonAdded={props.onSeasonAdded}/>)
             }

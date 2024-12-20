@@ -30,6 +30,10 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
         fetch();
     }
 
+    const onSeasonPlanned = () => {
+        fetch();
+    }
+
     useEffect(() => {
         fetch();
     }, [props.leagueId, props.refresh]);
@@ -48,7 +52,7 @@ export default function LeagueDetails(props: LeagueDetailsProps): React.JSX.Elem
             <View style={styles.tabsContainer}>
                 <Tabs tabs={[
                     {key: 'membership', title: 'Membership', view: <MembershipView leagueId={props.leagueId} onMemberRefresh={onMemberRefresh}/>},
-                    {key: 'season', title: 'Season', view: <SeasonTabView league={data} onSeasonAdded={onSeasonAdded}/>},
+                    {key: 'season', title: 'Season', view: <SeasonTabView league={data} onSeasonAdded={onSeasonAdded} onSeasonPlanned={onSeasonPlanned}/>},
                 ]}>
                 </Tabs>
             </View>
