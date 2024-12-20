@@ -1,9 +1,10 @@
 import {Button, Card, Divider, Surface, Text} from "react-native-paper";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, useWindowDimensions} from "react-native";
 import React, {useEffect} from "react";
 import {SeasonDetailResponse, useData} from "@/hooks/useData";
 import SeasonInformation from "@/components/Seasons/SeasonInformation";
 import usePost from "@/hooks/usePost";
+import Matches from "@/components/Seasons/Matches";
 
 
 export interface SeasonDetailsProps {
@@ -13,7 +14,9 @@ export interface SeasonDetailsProps {
 }
 export default function SeasonDetail(props: SeasonDetailsProps) {
     const {fetchData, data: seasonDetails, fetching, error} = useData<SeasonDetailResponse>();
-    const {postData, result, clearResult} = usePost()
+    const {postData, result, clearResult} = usePost();
+    const dimensions = useWindowDimensions();
+    const isLargeScreen = dimensions.width >= 768;
 
     const fetchRoundDetails = async () => {
         await fetchData(`/v1/leagues/${props.leagueId}/seasons/${props.seasonId}`);
@@ -42,9 +45,11 @@ export default function SeasonDetail(props: SeasonDetailsProps) {
 
     return (
         <View>
-            <Surface style={{ padding: 18}}>
+            <Surface style={{ padding: 18, flexDirection: isLargeScreen ? "row": "column"}}>
                 <Divider/>
-                <SeasonInformation season={seasonDetails}/>
+                <View style={{flexGrow: 0.5}}>
+                    <SeasonInformation season={seasonDetails}/>
+                </View>
                 <Divider/>
                 {
                     seasonDetails.status === 'pending' && (
@@ -55,6 +60,15 @@ export default function SeasonDetail(props: SeasonDetailsProps) {
                                 <Button onPress={handlePlanSeason}>Plan Season</Button>
                             </View>
                             <Divider/>
+                        </View>
+                    )
+                }
+                {
+                    ['planned', 'in_progress'].indexOf(seasonDetails.status) > -1
+                    &&
+                    (
+                        <View style={{marginTop: 18, flexGrow: 1}}>
+                            <Matches season={seasonDetails}/>
                         </View>
                     )
                 }
