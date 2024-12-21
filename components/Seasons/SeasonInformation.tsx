@@ -1,16 +1,26 @@
 import {SeasonDetailResponse} from "@/hooks/useData";
 import {StyleSheet, View} from "react-native";
-import {Surface,Text} from "react-native-paper";
+import {Button, Surface, Text} from "react-native-paper";
 
 export interface SeasonInformationProps {
-    season: SeasonDetailResponse
+    season: SeasonDetailResponse,
+    handleSeasonStart: () => void
 }
 export default function SeasonInformation(props: SeasonInformationProps) {
     return (
             <View style={styles.surfaceCard}>
-                    <View style={styles.row}>
-                        <Text style={styles.label}>Name: </Text>
-                        <Text style={styles.value}>{props.season.name} </Text>
+                    <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                        <View style={[styles.row]}>
+                            <Text style={styles.label}>Name: </Text>
+                            <Text style={styles.value}>{props.season.name} </Text>
+                        </View>
+                        {
+                            ['planned'].indexOf(props.season.status) > -1 && (
+                                <View>
+                                    <Button onPress={props.handleSeasonStart}>Start Season</Button>
+                                </View>
+                            )
+                        }
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.label}>Status: </Text>

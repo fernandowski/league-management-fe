@@ -11,6 +11,7 @@ export interface SeasonDetailsProps {
     seasonId: string
     leagueId: string
     onSeasonPlanned: () => void
+    handleSeasonStart: () => void
 }
 export default function SeasonDetail(props: SeasonDetailsProps) {
     const {fetchData, data: seasonDetails, fetching, error} = useData<SeasonDetailResponse>();
@@ -24,6 +25,12 @@ export default function SeasonDetail(props: SeasonDetailsProps) {
 
     const handlePlanSeason = async () => {
         await postData(`/v1/leagues/${props.leagueId}/seasons/${props.seasonId}/schedules`);
+        props.onSeasonPlanned();
+        fetchRoundDetails();
+    }
+
+    const handleSeasonStart = async () => {
+        await postData(`/v1/leagues/${props.leagueId}/seasons/${props.seasonId}/start`);
         props.onSeasonPlanned();
         fetchRoundDetails();
     }
@@ -46,15 +53,15 @@ export default function SeasonDetail(props: SeasonDetailsProps) {
     return (
         <View>
             <Surface style={{ padding: 18, flexDirection: isLargeScreen ? "row": "column"}}>
+                <View>{result && (<Text style={styles.errorMessage}>{result}</Text>)}</View>
                 <Divider/>
                 <View style={{flexGrow: 0.5}}>
-                    <SeasonInformation season={seasonDetails}/>
+                    <SeasonInformation season={seasonDetails} handleSeasonStart={handleSeasonStart}/>
                 </View>
                 <Divider/>
                 {
                     seasonDetails.status === 'pending' && (
                         <View>
-                            <View>{result && (<Text style={styles.errorMessage}>{result}</Text>)}</View>
                             <View style={styles.planSeasonContainer}>
                                 <Text>Plan Season</Text>
                                 <Button onPress={handlePlanSeason}>Plan Season</Button>

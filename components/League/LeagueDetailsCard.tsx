@@ -2,8 +2,6 @@ import {Card, Text} from "react-native-paper";
 import {View, StyleSheet} from "react-native";
 import React from "react";
 import {LeagueDetailResponse} from "@/hooks/useData";
-import SeasonDetailsCard from "@/components/League/SeasonDetailsCard";
-
 
 export interface LeagueDetailsCardProps {
     data: LeagueDetailResponse
