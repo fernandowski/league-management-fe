@@ -1,6 +1,7 @@
 import {Match} from "@/hooks/useData";
-import {View, StyleSheet} from "react-native";
+import {View, StyleSheet, Pressable} from "react-native";
 import {Text} from "react-native-paper";
+import {useState} from "react";
 
 
 export interface MatchUpProps {
@@ -9,7 +10,7 @@ export interface MatchUpProps {
 
 export default function MatchUp(props: MatchUpProps) {
     return (
-        <View style={styles.container}>
+        <Pressable>
             <View>
                 <Text style={styles.label}>{props.match.home_team}</Text>
             </View>
@@ -19,7 +20,7 @@ export default function MatchUp(props: MatchUpProps) {
             <View>
                 <Text style={styles.label}>{props.match.away_team}</Text>
             </View>
-        </View>
+        </Pressable>
     )
 }
 
@@ -28,10 +29,13 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "space-evenly",
-        marginVertical: 18
+        paddingVertical: 18
     },
     label: {
         fontWeight: "bold",
         width: 80,
+    },
+    onHover: {
+        backgroundColor: "green"
     }
 })

@@ -1,7 +1,8 @@
 import {Match, Round} from "@/hooks/useData";
-import {StyleSheet, View} from "react-native";
+import {Pressable, StyleSheet, View} from "react-native";
 import {Divider, Text} from "react-native-paper";
 import MatchUp from "@/components/Seasons/MatchUp";
+import {useRef, useState} from "react";
 
 export interface MatchUpListProps {
     round: Round
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#c7cdd2",
         justifyContent: "center"
     },
-    listContainer: {
-
+    onHover: {
+        backgroundColor: "purple"
     }
 })

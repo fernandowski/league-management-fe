@@ -11,7 +11,6 @@ export interface SeasonDetailsProps {
     seasonId: string
     leagueId: string
     onSeasonPlanned: () => void
-    handleSeasonStart: () => void
 }
 export default function SeasonDetail(props: SeasonDetailsProps) {
     const {fetchData, data: seasonDetails, fetching, error} = useData<SeasonDetailResponse>();
