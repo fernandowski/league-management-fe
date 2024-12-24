@@ -1,5 +1,5 @@
 import {View} from "react-native";
-import {Text} from "react-native-paper";
+import {Surface, Text} from "react-native-paper";
 import {useEffect} from "react";
 import {SeasonStandings, SeasonStandingsResponse, useData} from "@/hooks/useData";
 import TableList, {ColumnDefinition} from "@/components/TableList/TableList";
@@ -36,8 +36,10 @@ export default function SeasonStanding(props: SeasonStandingProps) {
 
     return (
         <View>
-            {error && <Text>{error}</Text>}
-            {data && <TableList data={data.standings} columns={columns}/>}
+            <Surface>
+                {error && <Text>{error}</Text>}
+                {data && <TableList data={data.standings} columns={columns}/>}
+            </Surface>
         </View>
     )
 }

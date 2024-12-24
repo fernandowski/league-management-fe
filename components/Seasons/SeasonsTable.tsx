@@ -1,8 +1,11 @@
-import {View} from "react-native";
-import {DataTable} from "react-native-paper";
-import {useEffect, useState} from "react";
+import {StyleSheet, View} from "react-native";
+import {Card, DataTable, Text} from "react-native-paper";
+import React, {useEffect, useState} from "react";
 import {useData} from "@/hooks/useData";
 import {useOrganizationStore} from "@/stores/organizationStore";
+import Pagination from "@/components/Pagination/Pagination";
+import {League} from "@/hooks/useLeagueData";
+import {Link} from "expo-router";
 
 interface Season {
     id: string;
@@ -17,27 +20,20 @@ interface SeasonResponse {
 
 interface SeasonTableIProps {
     leagueId: string;
-    refresh: boolean;
 }
 
-const numberOfItemsPerPageList = [5, 10, 25];
-
 export default function SeasonsTable(props: SeasonTableIProps) {
+    const {organization} = useOrganizationStore();
+
     const [page, setPage] = useState(0);
     const [seasons, setSeasons] = useState<Season[]>([]);
     const [total, setTotal] = useState(0);
-    const [numberOfItemsPerPage, onItemsPerPageChange] = useState(
-        numberOfItemsPerPageList[0]
-    );
-    const {organization} = useOrganizationStore();
+    const [numberOfItemsPerPage, onItemsPerPageChange] = useState(10);
 
-    const {fetchData, fetching, error} = useData<SeasonResponse>();
+    const {fetchData} = useData<SeasonResponse>();
 
     const from = page * numberOfItemsPerPage;
-    const to = Math.min((page + 1) * numberOfItemsPerPage, total);
-    const emptyRows = numberOfItemsPerPage - seasons.length;
 
-    // Fetch seasons data
     useEffect(() => {
         const fetchSeasons = async () => {
             const offsetFilter = `offset=${encodeURIComponent(from)}`;
@@ -53,7 +49,7 @@ export default function SeasonsTable(props: SeasonTableIProps) {
             }
         };
         fetchSeasons();
-    }, [props.leagueId, page, numberOfItemsPerPage, props.refresh]);
+    }, [props.leagueId, page, numberOfItemsPerPage]);
 
     useEffect(() => {
         if (page !== 0) {
@@ -62,33 +58,51 @@ export default function SeasonsTable(props: SeasonTableIProps) {
     }, [numberOfItemsPerPage, organization]);
 
     return (
-        <View style={{flex: 1}}>
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title>Name</DataTable.Title>
-                </DataTable.Header>
-                {seasons.map((season: Season) => (
-                    <DataTable.Row key={season.id}>
-                        <DataTable.Cell>{season.name}</DataTable.Cell>
-                    </DataTable.Row>
-                ))}
-
-                {emptyRows > 0 &&
-                    Array.from({length: emptyRows}).map((_, index) => (
-                        <DataTable.Row key={`empty-${index}`}>
-                            <DataTable.Cell>{'\u00A0'}</DataTable.Cell>
-                        </DataTable.Row>
-                    ))}
-                <DataTable.Pagination
-                    page={page}
-                    onPageChange={(page) => setPage(page)}
-                    label={`${from + 1}-${to} of ${total}`}
-                    numberOfPages={Math.ceil(total / numberOfItemsPerPage)}
-                    numberOfItemsPerPageList={numberOfItemsPerPageList}
-                    onItemsPerPageChange={onItemsPerPageChange}
-                    selectPageDropdownLabel={"Rows per page"}
-                />
-            </DataTable>
+        <View>
+            <Pagination currentPage={page} totalItems={total} itemsPerPage={10} onPageChange={setPage}/>
+            {
+                seasons.map((season: Season) => (
+                    <Card style={{marginBottom: 8, marginLeft: 1, marginRight: 1}} key={season.id}>
+                        <Card.Content>
+                            <Text style={styles.title}>{season.name}</Text>
+                        </Card.Content>
+                        <Card.Actions>
+                            <Link
+                                style={styles.link}
+                                href={`dashboard/seasons/${season.id}`}>
+                                <Text style={styles.linkText}>Details</Text>
+                            </Link>
+                        </Card.Actions>
+                    </Card>
+                ))
+            }
         </View>
     );
 }
+
+
+const styles = StyleSheet.create({
+    link: {
+        borderRadius: 8,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        backgroundColor: 'rgba(0, 0, 0, 0.00)',
+        borderColor: "#0056b3"
+    },
+    linkText: {
+        fontSize: 14,
+        color: 'rgb(103, 80, 164)'
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 8,
+    },
+    label: {
+        fontSize: 14,
+        color: "#555",
+    },
+    paginationContainer: {
+        alignSelf: "flex-end"
+    }
+});
