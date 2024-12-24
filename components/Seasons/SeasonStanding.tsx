@@ -11,8 +11,8 @@ export interface SeasonStandingProps {
 
 const columns: ColumnDefinition<SeasonStandings>[] = [
 
-    {key: 'team_name', title: 'Name', width: 200},
-    {key: 'total_points', title: 'Points', width: 100},
+    {key: 'team_name', title: 'Name', width: 100},
+    {key: 'total_points', title: 'Points', width: 80},
     {key: 'games_played', title: 'Games Played', width: 100},
     {key: 'total_wins', title: 'W'},
     {key: 'total_losses', title: 'L'},

@@ -18,7 +18,7 @@ export default function TableList<T>({ data, columns }: TableProps<T>) {
     const renderItem = ({ item }: { item: T }) => (
         <View style={styles.row}>
             {columns.map((column, index) => (
-                <View key={index} style={[styles.cell, {width: column.width}]}>
+                <View key={index} style={[styles.cell, {width: column.width || 'auto'}]}>
                     {column.render ? column.render(item[column.key]) : <Text>{String(item[column.key])}</Text>}
                 </View>
             ))}
@@ -38,7 +38,7 @@ export default function TableList<T>({ data, columns }: TableProps<T>) {
             <FlatList
                 data={data}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(_, index) => index.toString()}
                 contentContainerStyle={styles.table}
             />
         </View>
