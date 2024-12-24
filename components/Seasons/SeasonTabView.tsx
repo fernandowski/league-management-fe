@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import React from "react";
 import {LeagueDetailResponse} from "@/hooks/useData";
-import SeasonDetail from "@/components/Seasons/SeasonDetails";
+import LeagueSeasonDetails from "@/components/Seasons/SeasonDetails";
 import AddSeason from "@/components/Seasons/AddSeason";
 
 interface SeasonsViewProps {
@@ -15,7 +15,7 @@ const SeasonTabView = (props: SeasonsViewProps) => {
         <View style={styles.container}>
             {
                 props.league.season ?
-                (<SeasonDetail seasonId={props.league.season.id} leagueId={props.league.id} onSeasonPlanned={props.onSeasonPlanned}/>)
+                (<LeagueSeasonDetails seasonId={props.league.season.id} leagueId={props.league.id} onSeasonPlanned={props.onSeasonPlanned}/>)
                 :
                 (<AddSeason leagueId={props.league.id} onSeasonAdded={props.onSeasonAdded}/>)
             }

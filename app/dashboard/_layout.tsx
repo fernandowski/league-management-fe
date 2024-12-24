@@ -40,7 +40,7 @@ export default function Layout() {
                     }}
                 />
                 <Drawer.Screen
-                    name="seasons/index"
+                    name="seasons/[seasonID]/index"
                     options={{
                         drawerLabel: 'Seasons',
                         title: 'Seasons'

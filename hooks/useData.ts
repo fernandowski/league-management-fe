@@ -39,6 +39,21 @@ export interface SeasonDetailResponse {
     rounds: Round[]
 }
 
+export interface SeasonStandings {
+    games_played: number
+    team_id: string
+    team_name: string
+    total_goals: number
+    total_losses: number
+    total_points: number
+    total_ties: number
+    total_wins: number
+}
+export interface SeasonStandingsResponse {
+    season_id: string,
+    standings: SeasonStandings[]
+}
+
 export function useData<TResponse>() {
     const [fetching, setFetching] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);

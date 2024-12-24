@@ -12,7 +12,7 @@ export interface SeasonDetailsProps {
     leagueId: string
     onSeasonPlanned: () => void
 }
-export default function SeasonDetail(props: SeasonDetailsProps) {
+export default function LeagueSeasonDetails(props: SeasonDetailsProps) {
     const {fetchData, data: seasonDetails, fetching, error} = useData<SeasonDetailResponse>();
     const {postData, result, clearResult} = usePost();
     const dimensions = useWindowDimensions();
