@@ -10,7 +10,7 @@ export interface MatchUpProps {
 
 export default function MatchUp(props: MatchUpProps) {
     return (
-        <Pressable>
+        <Pressable style={styles.container}>
             <View>
                 <Text style={styles.label}>{props.match.home_team}</Text>
             </View>
