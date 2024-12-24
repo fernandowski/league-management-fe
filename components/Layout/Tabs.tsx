@@ -18,7 +18,10 @@ const Tabs = (props: TabsProps): React.ReactNode => {
     const [activeTab, setActiveTab] = useState(0); // Default to the second tab (Schedule)
     return (
         <View style={styles.container}>
-            <View style={isLargeScreen ? styles.tabContainer : {...styles.tabContainer, flexDirection: "column"}}>
+            <View style={[
+                {...styles.tabContainer},
+                !isLargeScreen ? {flexDirection: "column"} : undefined
+            ]}>
                 {props.tabs.map(({key,title, view}, index) => (
                     <TouchableOpacity
                         key={index}
@@ -54,13 +57,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 1,
         borderBottomColor: "#ddd",
+        gap: 8,
+        marginBottom: 8
     },
     tab: {
-        flex: 1,
-        paddingVertical: 10,
-        alignItems: "center",
         borderBottomWidth: 2,
         borderBottomColor: "transparent",
+        alignItems: "flex-start"
     },
     activeTab: {
         borderBottomColor: "#0056b3",
