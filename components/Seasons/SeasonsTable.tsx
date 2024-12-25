@@ -11,6 +11,7 @@ interface Season {
     id: string;
     name: string;
     league_id: string;
+    status: string
 }
 
 interface SeasonResponse {
@@ -64,7 +65,16 @@ export default function SeasonsTable(props: SeasonTableIProps) {
                 seasons.map((season: Season) => (
                     <Card style={{marginBottom: 8, marginLeft: 1, marginRight: 1}} key={season.id}>
                         <Card.Content>
-                            <Text style={styles.title}>{season.name}</Text>
+                            <View>
+                                <View>
+                                    <Text style={styles.title}>{season.name}</Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.label}>
+                                        Status: <Text>{season.status}</Text>
+                                    </Text>
+                                </View>
+                            </View>
                         </Card.Content>
                         <Card.Actions>
                             <Link
