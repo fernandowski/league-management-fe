@@ -54,6 +54,21 @@ export interface SeasonStandingsResponse {
     standings: SeasonStandings[]
 }
 
+
+export interface MatchScore {
+    id: string
+    away_score: number
+    home_score: number
+    away_team: string
+    home_team: string
+    round: number
+    status: string
+}
+export interface MatchesResponse {
+    round: number
+    matches: MatchScore[]
+}
+
 export function useData<TResponse>() {
     const [fetching, setFetching] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
