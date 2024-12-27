@@ -1,6 +1,6 @@
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {Drawer} from "expo-router/drawer";
-import {View, useWindowDimensions, Text} from "react-native";
+import {useWindowDimensions} from "react-native";
 import {Header} from "@/components/Header/Header";
 
 export default function Layout() {
@@ -11,10 +11,8 @@ export default function Layout() {
         <GestureHandlerRootView style={{flex: 1}}>
             <Drawer
                 screenOptions={{
-                    drawerType: isLargeScreen ? 'permanent': undefined,
-                    header: () => {
-                        return <Header/>
-                    },
+                    drawerType: isLargeScreen ? 'permanent' : undefined,
+                    header: () => <Header />,
                     drawerPosition: 'left',
                 }}
             >
@@ -22,28 +20,36 @@ export default function Layout() {
                     name="index"
                     options={{
                         drawerLabel: 'Organizations Overview',
-                        title: 'organization overview',
+                        title: 'Organizations Overview',
                     }}
                 />
                 <Drawer.Screen
                     name="leagues/[id]/index"
                     options={{
                         drawerLabel: 'Leagues',
-                        title: 'Leagues'
+                        title: 'Leagues',
                     }}
                 />
                 <Drawer.Screen
                     name="teams/index"
                     options={{
                         drawerLabel: 'Teams',
-                        title: 'Teams'
+                        title: 'Teams',
                     }}
                 />
                 <Drawer.Screen
-                    name="seasons/[seasonID]/index"
+                    name="seasons/index"
                     options={{
                         drawerLabel: 'Seasons',
-                        title: 'Seasons'
+                        title: 'Seasons',
+                    }}
+                />
+
+                <Drawer.Screen
+                    name="seasons/[id]"
+                    options={{
+                        drawerItemStyle: {display: 'none'},
+                        drawerLabel: () => null,
                     }}
                 />
             </Drawer>

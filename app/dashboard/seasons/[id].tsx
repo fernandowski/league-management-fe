@@ -8,7 +8,7 @@ import SeasonList from "@/components/Seasons/SeasonList";
 
 
 export default function SeasonDetails() {
-    const {seasonID: urlParamSeasonID} = useLocalSearchParams();
+    const {id: urlParamSeasonID} = useLocalSearchParams();
     const [seasonId, setSeasonID] = useState<string>(Array.isArray(urlParamSeasonID) ? urlParamSeasonID[0] : urlParamSeasonID || "");
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export default function SeasonDetails() {
     return (
         <ViewContent>
             {
-                seasonId ? <SeasonManagement seasonId={seasonId}/> : <View><SeasonList/></View>
+                seasonId ? <SeasonManagement seasonId={seasonId}/> : <View></View>
             }
         </ViewContent>)
 }
