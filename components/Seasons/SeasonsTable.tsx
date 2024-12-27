@@ -1,11 +1,10 @@
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, TouchableOpacity, View} from "react-native";
 import {Card, DataTable, Text} from "react-native-paper";
 import React, {useEffect, useState} from "react";
 import {useData} from "@/hooks/useData";
 import {useOrganizationStore} from "@/stores/organizationStore";
 import Pagination from "@/components/Pagination/Pagination";
-import {League} from "@/hooks/useLeagueData";
-import {Link} from "expo-router";
+import {useRouter} from "expo-router";
 
 interface Season {
     id: string;
@@ -25,6 +24,7 @@ interface SeasonTableIProps {
 
 export default function SeasonsTable(props: SeasonTableIProps) {
     const {organization} = useOrganizationStore();
+    const router = useRouter()
 
     const [page, setPage] = useState(0);
     const [seasons, setSeasons] = useState<Season[]>([]);
@@ -49,7 +49,10 @@ export default function SeasonsTable(props: SeasonTableIProps) {
                 setTotal(response.total);
             }
         };
-        fetchSeasons();
+
+        if (props.leagueId) {
+            fetchSeasons();
+        }
     }, [props.leagueId, page, numberOfItemsPerPage]);
 
     useEffect(() => {
@@ -77,11 +80,11 @@ export default function SeasonsTable(props: SeasonTableIProps) {
                             </View>
                         </Card.Content>
                         <Card.Actions>
-                            <Link
+                            <TouchableOpacity
                                 style={styles.link}
-                                href={`dashboard/seasons/${season.id}`}>
+                                onPress={() => router.push(`/dashboard/seasons/${season.id}`)}>
                                 <Text style={styles.linkText}>Details</Text>
-                            </Link>
+                            </TouchableOpacity>
                         </Card.Actions>
                     </Card>
                 ))

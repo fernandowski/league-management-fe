@@ -1,5 +1,6 @@
 import React from "react";
 import {ScrollView, StyleSheet, View} from "react-native";
+import {Header} from "@/components/Header/Header";
 
 interface ViewContentProps {
     children: React.ReactNode
@@ -7,17 +8,21 @@ interface ViewContentProps {
 
 const ViewContent = (props: ViewContentProps) => {
     return (
-        <View style={styles.outerContainer}>
-            <View style={styles.scrollContainer}>
-                <ScrollView
-                    style={styles.viewContainer}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.scrollContent}
-                >
-                    {props.children}
-                </ScrollView>
+        <View>
+            <View><Header/></View>
+            <View style={styles.outerContainer}>
+                <View style={styles.scrollContainer}>
+                    <ScrollView
+                        style={styles.viewContainer}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={styles.scrollContent}
+                    >
+                        {props.children}
+                    </ScrollView>
+                </View>
             </View>
         </View>
+
     )
 }
 

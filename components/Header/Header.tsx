@@ -49,7 +49,6 @@ const {height: screenHeight} = Dimensions.get('window');
 const styles = StyleSheet.create({
     view: {
         height: screenHeight * .05,
-        backgroundColor: "white",
     },
     select: {
         flex: 1,

@@ -1,7 +1,6 @@
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {Drawer} from "expo-router/drawer";
 import {useWindowDimensions} from "react-native";
-import {Header} from "@/components/Header/Header";
 
 export default function Layout() {
     const dimensions = useWindowDimensions();
@@ -12,8 +11,9 @@ export default function Layout() {
             <Drawer
                 screenOptions={{
                     drawerType: isLargeScreen ? 'permanent' : undefined,
-                    header: () => <Header />,
+                    header: () => null,
                     drawerPosition: 'left',
+                    unmountOnBlur: true,
                 }}
             >
                 <Drawer.Screen
