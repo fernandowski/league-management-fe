@@ -15,7 +15,7 @@ export default function MatchUpScoreCard(props: MatchUpScoreCardProps) {
                 <View style={[styles.row, styles.center]}>
                     <View style={[styles.row]}>
                         <Text style={[
-                             {textAlign: "left"},
+                             {textAlign: "right"},
                             isLargeScreen ? styles.labelWidth : styles.smallScreenLabelWidth
                         ]}>{props.data.home_team}</Text>
                     </View>
@@ -25,7 +25,7 @@ export default function MatchUpScoreCard(props: MatchUpScoreCardProps) {
                         <Text>{props.data.away_score}</Text>
                     </View>
                     <View style={[styles.row,]}>
-                        <Text style={[isLargeScreen ? styles.labelWidth : styles.smallScreenLabelWidth,{textAlign: "right"} ]}>{props.data.away_team}</Text>
+                        <Text style={[isLargeScreen ? styles.labelWidth : styles.smallScreenLabelWidth,{textAlign: "left"} ]}>{props.data.away_team}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
