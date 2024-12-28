@@ -7,6 +7,7 @@ import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
 import {apiRequest} from "@/api/api";
 import {useOrganizationStore} from "@/stores/organizationStore";
+import StyledModal from "@/components/StyledModal";
 
 const schema = Joi.object({
     name: Joi.string()
@@ -17,12 +18,13 @@ const schema = Joi.object({
 });
 
 interface CreateLeagueData {
-    name: string
+    name: string;
 }
 
 export interface AddLeagueModalProps {
-    onSave: () => void,
-    open: boolean
+    onSave: () => void;
+    onClose: () => void;
+    open: boolean;
 }
 
 export default function AddLeagueModal(props: AddLeagueModalProps) {
@@ -49,30 +51,33 @@ export default function AddLeagueModal(props: AddLeagueModalProps) {
     }
 
     return (
-        <Modal visible={props.open} dismissable={true} contentContainerStyle={[styles.modal]}>
-            <View style={[styles.formContainer]}>
-                <Text>Team Name</Text>
-                <ControlledTextInput label='Name' name={'name'} control={control} error={errors.name?.message}/>
-                <Button style={{alignSelf: "flex-end"}} onPress={handleSubmit(handleSave)}>Save</Button>
+        <StyledModal isOpen={props.open}>
+            <View style={[styles.formContainer, styles.formFields]}>
+                <View>
+                    <Text>Team Name</Text>
+                    <ControlledTextInput label='Name' name={'name'} control={control} error={errors.name?.message}/>
+                </View>
             </View>
-        </Modal>
+            <View style={styles.formActionButtons}>
+                <Button onPress={props.onClose}>Close</Button>
+                <Button onPress={handleSubmit(handleSave)}>Save</Button>
+            </View>
+        </StyledModal>
     )
 }
 
 const styles = StyleSheet.create({
-    modal: {
-        flex: 0.8,
-        padding: 16,
-        width: "80%",
-        maxHeight: 400,
-        maxWidth: 400,
-        zIndex: 200,
-        alignSelf: "center"
-    },
     formContainer: {
-        flex: 0.7,
-        padding: 16
+        justifyContent: "space-between",
+        flex: 1
     },
+    formFields: {
+        maxWidth: 500,
+    },
+    formActionButtons: {
+        alignSelf: "flex-end",
+        flexDirection: "row"
+    }
 })
 
 

@@ -22,6 +22,10 @@ export default function LeagueOverview() {
         setRefreshList(!refreshList);
     }
 
+    const onClose = () => {
+        setOpenAddLeagueModal(false);
+    }
+
 
     useFocusEffect(
         useCallback(() => {
@@ -43,7 +47,7 @@ export default function LeagueOverview() {
                 <LeagueList refresh={refreshList}></LeagueList>
             </ViewContent>
             <Portal>
-                <AddLeagueModal open={openAddLeagueModal} onSave={handleSaveLeague}/>
+                <AddLeagueModal open={openAddLeagueModal} onSave={handleSaveLeague} onClose={onClose}/>
             </Portal>
         </View>
     )

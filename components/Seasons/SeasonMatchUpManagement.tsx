@@ -1,7 +1,7 @@
 import {StyleSheet, View} from "react-native";
 import {Text} from "react-native-paper";
 import {useEffect} from "react";
-import {MatchesResponse, MatchScore, useData} from "@/hooks/useData";
+import {MatchesResponse, useData} from "@/hooks/useData";
 import MatchUpRound from "@/components/Seasons/MatchUpRound";
 
 export interface SeasonMatchUpManagementProps {
