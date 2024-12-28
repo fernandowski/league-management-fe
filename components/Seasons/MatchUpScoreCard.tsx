@@ -3,7 +3,8 @@ import {Surface, Text} from "react-native-paper";
 import {TouchableOpacity, View, StyleSheet, useWindowDimensions} from "react-native";
 
 export interface MatchUpScoreCardProps {
-    data: MatchScore
+    data: MatchScore;
+    onPress: (matchScore: MatchScore) => void
 }
 
 export default function MatchUpScoreCard(props: MatchUpScoreCardProps) {
@@ -11,7 +12,7 @@ export default function MatchUpScoreCard(props: MatchUpScoreCardProps) {
     const isLargeScreen = dimensions.width >= 768;
     return (
         <Surface style={{flex: 1}}>
-            <TouchableOpacity style={{paddingVertical: 18}}>
+            <TouchableOpacity style={{paddingVertical: 18}} onPress={() => props.onPress(props.data)}>
                 <View style={[styles.row, styles.center]}>
                     <View style={[styles.row]}>
                         <Text style={[

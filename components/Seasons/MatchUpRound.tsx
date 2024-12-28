@@ -4,7 +4,8 @@ import {Divider, Text} from "react-native-paper";
 import MatchUpScoreCard from "@/components/Seasons/MatchUpScoreCard";
 
 export interface SeasonMatchUpsListProps {
-    data: MatchesResponse
+    data: MatchesResponse;
+    onMatchPress: (matchScore: MatchScore) => void;
 }
 
 export default function MatchUpRound(props: SeasonMatchUpsListProps) {
@@ -16,7 +17,7 @@ export default function MatchUpRound(props: SeasonMatchUpsListProps) {
                 {
                     props.data.matches.map((match: MatchScore) => (
                         <View style={[styles.matchUpScoreCardContainer]} key={match.id}>
-                            <MatchUpScoreCard data={match}/>
+                            <MatchUpScoreCard data={match} onPress={props.onMatchPress}/>
                         </View>
                         ))
                 }
