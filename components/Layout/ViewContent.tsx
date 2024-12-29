@@ -9,12 +9,10 @@ interface ViewContentProps {
 const ViewContent = (props: ViewContentProps) => {
     return (
         <View style={styles.outerContainer}>
-            {/* Header */}
             <View>
                 <Header />
             </View>
 
-            {/* Scrollable Content */}
             <ScrollView
                 style={styles.scrollView}
                 contentContainerStyle={styles.scrollContent}
@@ -33,7 +31,8 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         flex: 1,
-        width: "80%",
+        width: "100%",
+        marginTop: 32,
     },
     scrollContent: {
         paddingHorizontal: 32,

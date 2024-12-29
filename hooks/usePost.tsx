@@ -1,11 +1,11 @@
 import {useState} from "react";
-import {apiRequest} from "@/api/api";
+import {apiRequest, RequestMethods} from "@/api/api";
 
 export default function usePost() {
     const [result, setResult] = useState<string | null>(null)
-    const postData = async (endpoint: string, body?: Record<string, any>) => {
+    const postData = async (endpoint: string, body?: Record<string, any>, method?: RequestMethods) => {
         try {
-            await apiRequest(endpoint, {method: "POST", body})
+            await apiRequest(endpoint, {method: method || "POST", body})
             setResult(null)
         } catch (error) {
             if (error instanceof Error) {

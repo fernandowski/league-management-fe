@@ -3,8 +3,8 @@ import {Text} from "react-native-paper";
 import {useCallback, useEffect, useState} from "react";
 import {MatchesResponse, MatchScore, useData} from "@/hooks/useData";
 import MatchUpRound from "@/components/Seasons/MatchUpRound";
-import StyledModal from "@/components/StyledModal";
-import ManageMatchModal from "@/components/Seasons/ManageMatchModal";
+import ManageMatchScoreModal from "@/components/Seasons/ManageMatchScoreModal";
+import usePost from "@/hooks/usePost";
 
 export interface SeasonMatchUpManagementProps {
     seasonId: string
@@ -13,6 +13,7 @@ export interface SeasonMatchUpManagementProps {
 export default function SeasonMatchUpManagement(props: SeasonMatchUpManagementProps) {
     const {fetchData, data, error} = useData<MatchesResponse[]>();
     const [openManageMatch, setOpenMangeMatch] = useState(false);
+    const {postData} = usePost();
     const [matchDetails, setMatchDetails] = useState<MatchScore>();
 
     const onMatchPress = useCallback((matchScoreDetails: MatchScore) => {
@@ -22,6 +23,17 @@ export default function SeasonMatchUpManagement(props: SeasonMatchUpManagementPr
 
     const onModalClose = () => {
         setOpenMangeMatch(false);
+    }
+
+    const onSave = async (scores: {home: number, away: number, matchId: string}) => {
+        await postData(`/v1/seasons/${props.seasonId}/matches/score`, {
+            match_id: scores.matchId,
+            home_score: scores.home,
+            away_score: scores.away,
+        }, 'PUT');
+
+        await fetchData(`/v1/seasons/${props.seasonId}/matches`);
+        onModalClose();
     }
 
     useEffect(() => {
@@ -46,7 +58,7 @@ export default function SeasonMatchUpManagement(props: SeasonMatchUpManagementPr
                     )
                 })
             }
-            { matchDetails && <ManageMatchModal isOpen={openManageMatch} matchDetails={matchDetails} onClose={onModalClose}/>}
+            { matchDetails && <ManageMatchScoreModal isOpen={openManageMatch} matchDetails={matchDetails} seasonId={props.seasonId} onSave={onSave} onClose={onModalClose}/>}
         </View>
     )
 }

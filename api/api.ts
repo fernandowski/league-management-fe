@@ -2,8 +2,9 @@ import {fetchJWT, JwtIsExpired, removeJWT} from "@/util/jwt-manager";
 import {router} from "expo-router";
 import {bool} from "yup";
 
+export type RequestMethods = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export interface RequestOptions {
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE';
+    method: RequestMethods
     headers?: { [key: string]: string };
     body?: any;
 }

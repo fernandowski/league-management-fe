@@ -43,9 +43,9 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     defaultWidth: {
-        width: "80%",
+        width: "auto",
     },
     defaultHeight: {
-        height: "80%",
+        height: "auto",
     }
 });
