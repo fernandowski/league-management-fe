@@ -26,8 +26,10 @@ export default function LeagueMembers(props: LeagueMembersProps) {
                                     <View key={member.id}>
                                         <Divider style={{marginTop: 4}}/>
                                         <View style={styles.row} key={member.id}>
-                                            <Text key={member.id}>{member.teamName}</Text>
-                                            <Button mode={'contained'} style={[styles.button]} onPress={() => props.onRemove(member.id)}>Remove</Button>
+                                            <View style={{flex: 1}}><Text>{member.teamName}</Text></View>
+                                            <View>
+                                                <Button mode={'contained'} style={[styles.button]} onPress={() => props.onRemove(member.id)}>Remove</Button>
+                                            </View>
                                         </View>
                                     </View>
                                 )
@@ -42,7 +44,6 @@ export default function LeagueMembers(props: LeagueMembersProps) {
 
 const styles = StyleSheet.create({
     button: {
-        height: 'auto',
         borderRadius: 0,
         alignSelf: "flex-end"
     },
