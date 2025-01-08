@@ -20,10 +20,6 @@ export default function LeagueDropdown(props: Props) {
         }
     }, [organization])
 
-    useEffect(() => {
-        if (data.length > 0) props.onChange(data[0].id)
-    }, [data]);
-
     const onSelectChange = (value: string) => {
         props.onChange(value)
     }

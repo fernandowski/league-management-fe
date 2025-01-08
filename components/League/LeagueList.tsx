@@ -50,7 +50,7 @@ export function LeagueList(props: LeagueListProps): React.JSX.Element {
                                     <Text style={styles.label}>Total Members: {league.totalMembers}</Text>
                                 </Card.Content>
                                 <Card.Actions>
-                                    <Link style={styles.link} href={`dashboard/leagues/${league.id}`}><Text style={styles.linkText}>Details</Text></Link>
+                                    <Link style={styles.link} href={`/dashboard/leagues/${league.id}`}><Text style={styles.linkText}>Details</Text></Link>
                                 </Card.Actions>
                             </Card>
                         ))
